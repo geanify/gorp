@@ -15,10 +15,6 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 			case *sdl.QuitEvent:
 				println("Quit")
 				running = false
-				break
-
-			default:
-				break
 			}
 
 		}
