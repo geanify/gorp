@@ -27,7 +27,7 @@ func createSurface(window *sdl.Window) (surface *sdl.Surface) {
 	}
 	surface.FillRect(nil, 0)
 
-	rect := sdl.Rect{0, 0, 200, 200}
+	rect := sdl.Rect{X: 0, Y: 0, W: 200, H: 200}
 	colour := sdl.Color{R: 255, G: 0, B: 255, A: 255} // purple
 	pixel := sdl.MapRGBA(surface.Format, colour.R, colour.G, colour.B, colour.A)
 	surface.FillRect(&rect, pixel)
