@@ -6,7 +6,8 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 	running := true
 	for running {
 
-		renderer.Copy(texture, nil, nil)
+		rect := &sdl.Rect{0, 0, 64, 64}
+		renderer.Copy(texture, rect, rect)
 		renderer.Present()
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 
