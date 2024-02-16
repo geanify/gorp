@@ -6,7 +6,7 @@ func initSDL() {
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
 	}
-	defer sdl.Quit();
+	defer sdl.Quit()
 }
 
 func initWindow() (window *sdl.Window) {
@@ -16,11 +16,11 @@ func initWindow() (window *sdl.Window) {
 		panic(err)
 	}
 
-  return window
+	return window
 }
 
 func createSurface(window *sdl.Window) (surface *sdl.Surface) {
-  surface, err := window.GetSurface()
+	surface, err := window.GetSurface()
 
 	if err != nil {
 		panic(err)
@@ -32,39 +32,39 @@ func createSurface(window *sdl.Window) (surface *sdl.Surface) {
 	pixel := sdl.MapRGBA(surface.Format, colour.R, colour.G, colour.B, colour.A)
 	surface.FillRect(&rect, pixel)
 
-  return surface;
+	return surface
 }
 
 func gameLoop() {
 	running := true
 	for running {
 
-    for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-			
-      switch event.(type) {
-			
-        case *sdl.QuitEvent:
-          println("Quit")
-          running = false
-          break
-        
-        default:
-          break
-      }
+		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+
+			switch event.(type) {
+
+			case *sdl.QuitEvent:
+				println("Quit")
+				running = false
+				break
+
+			default:
+				break
+			}
 
 		}
-	
-  }
+
+	}
 }
 
 func main() {
-  initSDL()
-  window := initWindow()
-  defer window.Destroy();
+	initSDL()
+	window := initWindow()
+	defer window.Destroy()
 
-	createSurface(window);
+	createSurface(window)
 
 	window.UpdateSurface()
 
-  gameLoop()
+	gameLoop()
 }
