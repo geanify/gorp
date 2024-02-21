@@ -7,11 +7,11 @@ func main() {
 
 	renderer := createRenderer(window)
 
-	image := loadImage("assets/sprite.png", renderer)
+	texture := loadImageAsTexture("assets/sprite.png", renderer)
 
 	// createSurface(window)
 
 	// window.UpdateSurface()
 
-	gameLoop(renderer, image)
+	gameLoop(renderer, texture)
 }
