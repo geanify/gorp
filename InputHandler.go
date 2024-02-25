@@ -28,17 +28,27 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 	iHandler.keyboardState = sdl.GetKeyboardState()
 	iHandler.start = now
 
+	player := entitiesMap["player"]
+
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
-		entitiesMap["player"].moveLeft(elapsed)
+		player.sprite.nextFrame()
+		player.moveLeft(elapsed)
+		player.sprite.setAnimation("left")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
-		entitiesMap["player"].moveRight(elapsed)
+		player.moveRight(elapsed)
+		player.sprite.nextFrame()
+		player.sprite.setAnimation("right")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		entitiesMap["player"].moveUp(elapsed)
+		player.moveUp(elapsed)
+		player.sprite.nextFrame()
+		player.sprite.setAnimation("up")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		entitiesMap["player"].moveDown(elapsed)
+		player.moveDown(elapsed)
+		player.sprite.nextFrame()
+		player.sprite.setAnimation("down")
 	}
 }
 

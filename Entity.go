@@ -16,7 +16,7 @@ type Entity struct {
 }
 
 func (entity *Entity) renderSprite(renderer *sdl.Renderer) {
-	renderer.Copy(entity.sprite.texture, entity.sprite.frame, entity.position)
+	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.position)
 }
 
 func (entity *Entity) renderText(renderer *sdl.Renderer) {
