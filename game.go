@@ -13,7 +13,7 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 	cycles := 0
 	entities := loadEntities(texture)
 	fpsCounter := createFPSCounter()
-	entities = append(entities, fpsCounter)
+	entities["fpsCounter"] = fpsCounter
 	iHandler := createInputHandler()
 
 	// go handleInput(entities)

@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
+	"golang.org/x/exp/maps"
 )
 
 type Entity struct {
@@ -32,7 +33,8 @@ func (entity *Entity) render(renderer *sdl.Renderer) {
 
 }
 
-func renderEntities(entities []*Entity, renderer *sdl.Renderer) {
+func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer) {
+	entities := maps.Values(entitiesMap)
 	for i := 0; i < len(entities); i++ {
 		entity := entities[i]
 
