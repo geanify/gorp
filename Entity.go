@@ -5,12 +5,29 @@ import (
 )
 
 type Entity struct {
-	sprite   *Sprite
-	position *sdl.Rect
+	entityType int32
+	sprite     *Sprite
+	text       *Text
+	position   *sdl.Rect
+	speed      int32
+}
+
+func (entity *Entity) renderSprite(renderer *sdl.Renderer) {
+	renderer.Copy(entity.sprite.texture, entity.sprite.frame, entity.position)
+}
+
+func (entity *Entity) renderText(renderer *sdl.Renderer) {
+	entity.text.renderText(renderer, entity.position)
 }
 
 func (entity *Entity) render(renderer *sdl.Renderer) {
-	renderer.Copy(entity.sprite.texture, entity.sprite.frame, entity.position)
+	switch entity.entityType {
+	case 0:
+		entity.renderSprite(renderer)
+	case 1:
+		entity.renderText(renderer)
+	}
+
 }
 
 func renderEntities(entities []Entity, renderer *sdl.Renderer) {
@@ -19,5 +36,9 @@ func renderEntities(entities []Entity, renderer *sdl.Renderer) {
 
 		entity.render(renderer)
 	}
+}
 
+func (entity *Entity) move() {
+	entity.position.X = entity.position.X + entity.speed
+	entity.position.Y = entity.position.Y + entity.speed
 }

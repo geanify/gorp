@@ -1,42 +1,15 @@
 package main
 
-import (
-	"fmt"
+import "github.com/veandco/go-sdl2/sdl"
 
-	"github.com/veandco/go-sdl2/sdl"
-	"github.com/veandco/go-sdl2/ttf"
-)
+func createFPSCounter() Entity {
+	text := &Text{}
 
-func printFPS(renderer *sdl.Renderer, fps float64) {
-	font, err := ttf.OpenFont("./FreeSans.ttf", 24)
-
-	if err != nil {
-		return
-	}
-
-	white := sdl.Color{255, 255, 255, 255}
-	black := sdl.Color{0, 0, 0, 255}
-
-	fpsStr := fmt.Sprintf("fps %f", fps)
-
-	surf, err2 := font.RenderUTF8Shaded(fpsStr, white, black)
-
-	defer surf.Free()
-
-	if err2 != nil {
-		return
-	}
-
-	message, err3 := renderer.CreateTextureFromSurface(surf)
-
-	defer message.Destroy()
-
-	if err3 != nil {
-		return
-	}
-
-	rect := &sdl.Rect{X: 500, Y: 500, W: 100, H: 25}
-
-	renderer.Copy(message, nil, rect)
-
+	text.setFont("./FreeSans.ttf", 24)
+	text.setColorRGB(255, 255, 255)
+	text.setBackgroundColorRGB(0, 0, 0)
+	text.setText("")
+	fpsCounterPos := &sdl.Rect{500, 500, 100, 25}
+	fpsCounterEntity := Entity{text: text, entityType: 1, position: fpsCounterPos}
+	return fpsCounterEntity
 }
