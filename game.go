@@ -14,6 +14,9 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 	entities := loadEntities(texture)
 	fpsCounter := createFPSCounter()
 	entities = append(entities, fpsCounter)
+	iHandler := createInputHandler()
+
+	// go handleInput(entities)
 
 	for running {
 		renderer.Clear()
@@ -28,13 +31,16 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 				println("Quit")
 				running = false
 
-			case *sdl.KeyboardEvent:
-				handleInput(entities)
+				// case *sdl.KeyboardEvent:
+				// 	handleInput(entities)
 			}
 
 		}
+		handleInput(entities, iHandler)
+
 		if elapsed.Seconds() > 1 {
-			fpsCounter.text.text = fmt.Sprintf("%f", float64(cycles)/elapsed.Seconds())
+			fpsString := fmt.Sprintf("%f", float64(cycles)/elapsed.Seconds())
+			fpsCounter.text.setText(fpsString)
 			start = time.Now()
 			cycles = 0
 		}

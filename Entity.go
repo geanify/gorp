@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -30,7 +32,7 @@ func (entity *Entity) render(renderer *sdl.Renderer) {
 
 }
 
-func renderEntities(entities []Entity, renderer *sdl.Renderer) {
+func renderEntities(entities []*Entity, renderer *sdl.Renderer) {
 	for i := 0; i < len(entities); i++ {
 		entity := entities[i]
 
@@ -38,7 +40,18 @@ func renderEntities(entities []Entity, renderer *sdl.Renderer) {
 	}
 }
 
-func (entity *Entity) move() {
-	entity.position.X = entity.position.X + entity.speed
-	entity.position.Y = entity.position.Y + entity.speed
+func (entity *Entity) moveLeft(elapsed time.Duration) {
+	entity.position.X -= entity.speed
+}
+
+func (entity *Entity) moveRight(elapsed time.Duration) {
+	entity.position.X += entity.speed
+}
+
+func (entity *Entity) moveUp(elapsed time.Duration) {
+	entity.position.Y -= entity.speed
+}
+
+func (entity *Entity) moveDown(elapsed time.Duration) {
+	entity.position.Y += entity.speed
 }
