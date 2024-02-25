@@ -19,7 +19,7 @@ func (iHandler *InputHandler) isKeyPressed(key int) bool {
 
 func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 	now := time.Now()
-	elapsed := time.Now().Sub(iHandler.start)
+	elapsed := now.Sub(iHandler.start)
 
 	if elapsed.Milliseconds() < tickRateMS {
 		return

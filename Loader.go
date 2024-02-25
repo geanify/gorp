@@ -1,10 +1,45 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func loadEntities(texture *sdl.Texture) map[string]*Entity {
+const tileSize = 64
+
+func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
+	sprite := Sprite{
+		texture:    texture,
+		maxFrames:  0,
+		frameIndex: 0,
+		animations: map[string]*sdl.Rect{
+			"red":  {X: 0, Y: 0, W: 64, H: 64},
+			"blue": {X: 0, Y: 64, W: 64, H: 64},
+		},
+		currentAnimation: "red",
+	}
+	if (i+j)%2 == 0 {
+		sprite.currentAnimation = "blue"
+	}
+	pos := &sdl.Rect{X: tileSize * i, Y: tileSize * j, W: 64, H: 64}
+	entity := &Entity{sprite: &sprite, position: pos, speed: 0}
+	return entity
+}
+
+func generateTileMap(renderer *sdl.Renderer) map[string]*Entity {
+	entities := make(map[string]*Entity)
+	texture := loadImageAsTexture("assets/tiles.png", renderer)
+	for i := int32(0); i < 50; i++ {
+		for j := int32(0); j < 50; j++ {
+			textureName := fmt.Sprintf("z-texture-%d-%d", i, j)
+			entities[textureName] = generateTileFromCoords(i, j, texture)
+		}
+	}
+	return entities
+}
+
+func loadEntities(texture *sdl.Texture, renderer *sdl.Renderer) map[string]*Entity {
 	entities := make(map[string]*Entity)
 
 	rect := &sdl.Rect{X: 0, Y: 0, W: 64, H: 64}
