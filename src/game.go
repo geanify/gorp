@@ -35,7 +35,6 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 			switch event.(type) {
 
 			case *sdl.QuitEvent:
-				println("Quit")
 				running = false
 			case *sdl.MouseWheelEvent:
 				parsedEvent := *(*sdl.MouseWheelEvent)(unsafe.Pointer(&event))

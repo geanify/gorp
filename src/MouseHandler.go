@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -24,19 +23,15 @@ func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
 	x, y, _ := sdl.GetMouseState()
 
 	if x < 20 {
-		fmt.Println("edge")
 		cam.moveRight()
 	}
 	if x > 780 {
-		fmt.Println("edge")
 		cam.moveLeft()
 	}
 	if y < 20 {
-		fmt.Println("edge")
 		cam.moveDown()
 	}
 	if y > 580 {
-		fmt.Println("edge")
 		cam.moveUp()
 	}
 
