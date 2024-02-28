@@ -7,24 +7,23 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
+func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 	running := true
 	start := time.Now()
 	cycles := 0
-	tileMap := generateTileMap(renderer)
-	entities := loadEntities(texture, renderer)
+	tileMap := generateTileMap(gameRenderer)
+	entities := loadEntities(texture, gameRenderer)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
 	iHandler := createInputHandler()
 
-	// go handleInput(entities)
-
+	go handleInput(entities, iHandler)
 	for running {
-		renderer.Clear()
+		gameRenderer.Clear()
 		t := time.Now()
 		elapsed := t.Sub(start)
-		renderEntities(tileMap, renderer)
-		renderEntities(entities, renderer)
+		renderEntities(tileMap, gameRenderer)
+		renderEntities(entities, gameRenderer)
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 
 			switch event.(type) {
@@ -32,13 +31,9 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 			case *sdl.QuitEvent:
 				println("Quit")
 				running = false
-
-				// case *sdl.KeyboardEvent:
-				// 	handleInput(entities)
 			}
 
 		}
-		handleInput(entities, iHandler)
 
 		if elapsed.Seconds() > 1 {
 			fpsString := fmt.Sprintf("%f", float64(cycles)/elapsed.Seconds())
@@ -46,7 +41,7 @@ func gameLoop(renderer *sdl.Renderer, texture *sdl.Texture) {
 			start = time.Now()
 			cycles = 0
 		}
-		renderer.Present()
+		gameRenderer.Present()
 		cycles++
 	}
 }

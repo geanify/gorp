@@ -57,5 +57,7 @@ func createInputHandler() *InputHandler {
 }
 
 func handleInput(entities map[string]*Entity, iHandler *InputHandler) {
-	iHandler.handleInput(entities)
+	for true {
+		iHandler.handleInput(entities)
+	}
 }
