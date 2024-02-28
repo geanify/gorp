@@ -11,7 +11,7 @@ type MouseHandler struct {
 	start time.Time
 }
 
-func (mHandler *MouseHandler) handleCameraMove() {
+func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
 	now := time.Now()
 	elapsed := now.Sub(mHandler.start)
 
@@ -25,16 +25,26 @@ func (mHandler *MouseHandler) handleCameraMove() {
 
 	if x < 20 {
 		fmt.Println("edge")
+		cam.moveRight()
+	}
+	if x > 780 {
+		fmt.Println("edge")
+		cam.moveLeft()
 	}
 	if y < 20 {
 		fmt.Println("edge")
+		cam.moveDown()
+	}
+	if y > 580 {
+		fmt.Println("edge")
+		cam.moveUp()
 	}
 
 }
 
-func handleMouse(mHandler *MouseHandler) {
+func handleMouse(mHandler *MouseHandler, cam *Camera) {
 	for {
-		mHandler.handleCameraMove()
+		mHandler.handleCameraMove(cam)
 	}
 }
 

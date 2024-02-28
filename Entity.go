@@ -16,30 +16,39 @@ type Entity struct {
 	physics    int
 }
 
-func (entity *Entity) renderSprite(renderer *sdl.Renderer) {
-	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.position)
+func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
+	return &sdl.Rect{
+		X: entity.position.X + cam.position.X,
+		Y: entity.position.Y + cam.position.Y,
+		W: entity.position.W,
+		H: entity.position.H,
+	}
 }
 
-func (entity *Entity) renderText(renderer *sdl.Renderer) {
-	entity.text.renderText(renderer, entity.position)
+func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *Camera) {
+	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.getAdjustedPos(cam))
 }
 
-func (entity *Entity) render(renderer *sdl.Renderer) {
+func (entity *Entity) renderText(renderer *sdl.Renderer, cam *Camera) {
+	entity.text.renderText(renderer, entity.getAdjustedPos(cam))
+}
+
+func (entity *Entity) render(renderer *sdl.Renderer, cam *Camera) {
 	switch entity.entityType {
 	case 0:
-		entity.renderSprite(renderer)
+		entity.renderSprite(renderer, cam)
 	case 1:
-		entity.renderText(renderer)
+		entity.renderText(renderer, cam)
 	}
 
 }
 
-func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer) {
+func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam *Camera) {
 	entities := maps.Values(entitiesMap)
 	for i := 0; i < len(entities); i++ {
 		entity := entities[i]
 
-		entity.render(renderer)
+		entity.render(renderer, cam)
 	}
 }
 
