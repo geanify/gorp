@@ -36,18 +36,18 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 		player.sprite.setAnimation("left")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
-		player.moveRight(elapsed)
 		player.sprite.nextFrame()
+		player.moveRight(elapsed)
 		player.sprite.setAnimation("right")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		player.moveUp(elapsed)
 		player.sprite.nextFrame()
+		player.moveUp(elapsed)
 		player.sprite.setAnimation("up")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		player.moveDown(elapsed)
 		player.sprite.nextFrame()
+		player.moveDown(elapsed)
 		player.sprite.setAnimation("down")
 	}
 }
@@ -57,7 +57,7 @@ func createInputHandler() *InputHandler {
 }
 
 func handleInput(entities map[string]*Entity, iHandler *InputHandler) {
-	for true {
+	for {
 		iHandler.handleInput(entities)
 	}
 }

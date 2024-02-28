@@ -9,7 +9,7 @@ func main() {
 	sdl.GLSetAttribute(sdl.GL_DOUBLEBUFFER, 1)
 	renderer := createRenderer(window)
 
-	texture := loadImageAsTexture("assets/sprite.png", renderer)
+	texture := loadImageAsTexture("assets/pokemon.png", renderer)
 
 	// createSurface(window)
 

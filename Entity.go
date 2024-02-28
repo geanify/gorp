@@ -12,7 +12,8 @@ type Entity struct {
 	sprite     *Sprite
 	text       *Text
 	position   *sdl.Rect
-	speed      int32
+	speed      int32 //per tickrate
+	physics    int
 }
 
 func (entity *Entity) renderSprite(renderer *sdl.Renderer) {
