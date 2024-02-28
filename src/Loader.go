@@ -29,7 +29,7 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 
 func generateTileMap(renderer *sdl.Renderer) map[string]*Entity {
 	entities := make(map[string]*Entity)
-	texture := loadImageAsTexture("assets/tileset-grass.png", renderer)
+	texture := loadImageAsTexture("../assets/tileset-grass.png", renderer)
 	for i := int32(0); i < 50; i++ {
 		for j := int32(0); j < 50; j++ {
 			textureName := fmt.Sprintf("z-texture-%d-%d", i, j)
