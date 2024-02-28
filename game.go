@@ -36,7 +36,7 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 		}
 
 		if elapsed.Seconds() > 1 {
-			fpsString := fmt.Sprintf("%f", float64(cycles)/elapsed.Seconds())
+			fpsString := fmt.Sprintf("%d fps", int(float64(cycles)/elapsed.Seconds()))
 			fpsCounter.text.setText(fpsString)
 			start = time.Now()
 			cycles = 0
