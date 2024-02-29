@@ -2,14 +2,24 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
-	"unsafe"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
 
+func handleQuit() {
+	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+
+		switch event.(type) {
+
+		case *sdl.QuitEvent:
+			os.Exit(0)
+		}
+	}
+}
+
 func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
-	running := true
 	start := time.Now()
 	cycles := 0
 
@@ -23,28 +33,13 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 	camera := createCamera()
 	aRenderer := createARenderer(gameRenderer, camera)
 
-	for running {
+	for {
 		aRenderer.clearRenderer()
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
 		t := time.Now()
 		elapsed := t.Sub(start)
-		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-
-			switch event.(type) {
-
-			case *sdl.QuitEvent:
-				running = false
-			case *sdl.MouseWheelEvent:
-				parsedEvent := *(*sdl.MouseWheelEvent)(unsafe.Pointer(&event))
-				if parsedEvent.Y >= 0 {
-					gameRenderer.SetScale(0.5, 0.5)
-				} else {
-					gameRenderer.SetScale(1.5, 1.5)
-				}
-			}
-		}
 
 		if elapsed.Seconds() > 1 {
 			fpsString := fmt.Sprintf("%d fps", int(float64(cycles)/elapsed.Seconds()))
@@ -52,9 +47,11 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 			start = time.Now()
 			cycles = 0
 		}
+		aRenderer.present()
 		iHandler.handleInput(entities)
 		mHandler.handleCameraMove(camera)
-		aRenderer.present()
 		cycles++
+
+		handleQuit()
 	}
 }
