@@ -19,6 +19,20 @@ func handleQuit() {
 	}
 }
 
+func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
+	t := time.Now()
+	elapsed := t.Sub(*start)
+
+	if elapsed.Seconds() < 1 {
+		return
+	}
+
+	fpsString := fmt.Sprintf("%d fps", int(float64(*cycles)/elapsed.Seconds()))
+	fpsCounter.text.setText(fpsString)
+	*start = time.Now()
+	*cycles = 0
+}
+
 func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 	start := time.Now()
 	cycles := 0
@@ -38,15 +52,8 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
-		t := time.Now()
-		elapsed := t.Sub(start)
+		handleFpsCounter(fpsCounter, &start, &cycles)
 
-		if elapsed.Seconds() > 1 {
-			fpsString := fmt.Sprintf("%d fps", int(float64(cycles)/elapsed.Seconds()))
-			fpsCounter.text.setText(fpsString)
-			start = time.Now()
-			cycles = 0
-		}
 		aRenderer.present()
 		iHandler.handleInput(entities)
 		mHandler.handleCameraMove(camera)
