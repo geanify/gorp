@@ -25,6 +25,10 @@ func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
 	}
 }
 
+func (entity *Entity) shouldRender(cam *Camera) bool {
+	return entity.position.HasIntersection(cam.invertedPosition())
+}
+
 func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *Camera) {
 	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.getAdjustedPos(cam))
 }
@@ -34,6 +38,11 @@ func (entity *Entity) renderText(renderer *sdl.Renderer, cam *Camera) {
 }
 
 func (entity *Entity) render(renderer *sdl.Renderer, cam *Camera) {
+
+	if !entity.shouldRender(cam) {
+		return
+	}
+
 	switch entity.entityType {
 	case 0:
 		entity.renderSprite(renderer, cam)
