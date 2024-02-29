@@ -3,12 +3,14 @@ package main
 import (
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 func initSDL() {
 	if err := sdl.Init(sdl.INIT_EVERYTHING | img.INIT_PNG); err != nil {
 		panic(err)
 	}
+	ttf.Init()
 	defer sdl.Quit()
 
 }
@@ -49,7 +51,7 @@ func createSurface(window *sdl.Window) (surface *sdl.Surface) {
 	return surface
 }
 
-func loadImage(fileLocation string, renderer *sdl.Renderer) (texture *sdl.Texture) {
+func loadImageAsTexture(fileLocation string, renderer *sdl.Renderer) (texture *sdl.Texture) {
 	texture, err := img.LoadTexture(renderer, fileLocation)
 
 	if err != nil {
