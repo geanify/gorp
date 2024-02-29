@@ -7,18 +7,14 @@ import (
 )
 
 type MouseHandler struct {
-	start time.Time
+	timeControl TimeControl
 }
 
 func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
-	now := time.Now()
-	elapsed := now.Sub(mHandler.start)
 
-	if elapsed.Milliseconds() < tickRateMS {
+	if !mHandler.timeControl.shouldExecute() {
 		return
 	}
-
-	mHandler.start = now
 
 	x, y, _ := sdl.GetMouseState()
 
@@ -40,9 +36,10 @@ func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
 func handleMouse(mHandler *MouseHandler, cam *Camera) {
 	for {
 		mHandler.handleCameraMove(cam)
+		time.Sleep((tickRateMS / 3) * time.Millisecond)
 	}
 }
 
 func createMouseHandler() *MouseHandler {
-	return &MouseHandler{start: time.Now()}
+	return &MouseHandler{timeControl: *createTimeControl()}
 }

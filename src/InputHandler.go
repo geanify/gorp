@@ -11,6 +11,7 @@ const tickRateMS = 100 //miliseconds
 type InputHandler struct {
 	keyboardState []uint8
 	start         time.Time
+	timeControl   *TimeControl
 }
 
 func (iHandler *InputHandler) isKeyPressed(key int) bool {
@@ -18,15 +19,12 @@ func (iHandler *InputHandler) isKeyPressed(key int) bool {
 }
 
 func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
-	now := time.Now()
-	elapsed := now.Sub(iHandler.start)
-
-	if elapsed.Milliseconds() < tickRateMS {
+	if !iHandler.timeControl.shouldExecute() {
 		return
 	}
+	elapsed := iHandler.timeControl.getElapsed()
 
 	iHandler.keyboardState = sdl.GetKeyboardState()
-	iHandler.start = now
 
 	player := entitiesMap["player"]
 
@@ -53,11 +51,12 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 }
 
 func createInputHandler() *InputHandler {
-	return &InputHandler{keyboardState: sdl.GetKeyboardState(), start: time.Now()}
+	return &InputHandler{keyboardState: sdl.GetKeyboardState(), start: time.Now(), timeControl: createTimeControl()}
 }
 
 func handleInput(entities map[string]*Entity, iHandler *InputHandler) {
 	for {
 		iHandler.handleInput(entities)
+		time.Sleep((tickRateMS / 3) * time.Millisecond)
 	}
 }

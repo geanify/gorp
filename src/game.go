@@ -21,15 +21,15 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 	mHandler := createMouseHandler()
 
 	camera := createCamera()
+	aRenderer := createARenderer(gameRenderer, camera)
 
-	go handleInput(entities, iHandler)
-	go handleMouse(mHandler, camera)
 	for running {
-		gameRenderer.Clear()
+		aRenderer.clearRenderer()
+		aRenderer.handleRendering(tileMap)
+
+		aRenderer.handleRendering(entities)
 		t := time.Now()
 		elapsed := t.Sub(start)
-		renderEntities(tileMap, gameRenderer, camera)
-		renderEntities(entities, gameRenderer, camera)
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 
 			switch event.(type) {
@@ -52,7 +52,9 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 			start = time.Now()
 			cycles = 0
 		}
-		gameRenderer.Present()
+		iHandler.handleInput(entities)
+		mHandler.handleCameraMove(camera)
+		aRenderer.present()
 		cycles++
 	}
 }
