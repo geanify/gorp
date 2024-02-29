@@ -7,7 +7,7 @@ type Camera struct {
 }
 
 func createCamera() *Camera {
-	return &Camera{position: &sdl.Rect{0, 0, 600, 800}}
+	return &Camera{position: &sdl.Rect{X: 0, Y: 0, W: 600, H: 800}}
 }
 
 func (cam *Camera) moveRight() {
