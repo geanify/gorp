@@ -38,10 +38,14 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 		player.moveRight(elapsed)
 		player.sprite.setAnimation("right")
 	}
-	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
+	if iHandler.isKeyPressed(sdl.SCANCODE_SPACE) {
 		player.sprite.nextFrame()
 		player.moveUp(elapsed)
 		player.sprite.setAnimation("up")
+	} else {
+		// player.sprite.nextFrame()
+		// player.moveDown(elapsed)
+		// player.sprite.setAnimation("down")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.sprite.nextFrame()

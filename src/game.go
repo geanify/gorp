@@ -22,7 +22,7 @@ func handleQuit() {
 func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	t := time.Now()
 	elapsed := t.Sub(*start)
-
+	*cycles++
 	if elapsed.Seconds() < 1 {
 		return
 	}
@@ -52,12 +52,12 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
-		handleFpsCounter(fpsCounter, &start, &cycles)
 
 		aRenderer.present()
 		iHandler.handleInput(entities)
 		mHandler.handleCameraMove(camera)
-		cycles++
+
+		handleFpsCounter(fpsCounter, &start, &cycles)
 
 		handleQuit()
 	}
