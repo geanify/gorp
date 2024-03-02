@@ -1,0 +1,15 @@
+[
+    {
+        "texture":    "run",
+		"frame":      "rect",
+		"maxFrames":  4,
+		"frameIndex": 0,
+		"animations": {
+			"down":  {"X": 0, "Y": 80, "W": 80, "H": 80},
+			"left":  {"X": 0, "Y": 0, "W": 80, "H": 80},
+			"right": {"X": 0, "Y": 0, "W": 80, "H": 80},
+			"up":    {"X": 0, "Y": 80, "W": 80, "H": 80}
+		},
+		"currentAnimation": "down"
+    }
+]

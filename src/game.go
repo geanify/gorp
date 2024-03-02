@@ -33,7 +33,7 @@ func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	*cycles = 0
 }
 
-func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
+func gameLoop(gameRenderer *sdl.Renderer) {
 	start := time.Now()
 	cycles := 0
 

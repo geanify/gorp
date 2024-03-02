@@ -21,4 +21,5 @@
 go.work
 .vscode
 
-assets/
+assets/font
+assets/textures

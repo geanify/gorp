@@ -38,7 +38,7 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 		player.moveRight(elapsed)
 		player.sprite.setAnimation("right")
 	}
-	if iHandler.isKeyPressed(sdl.SCANCODE_SPACE) {
+	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
 		player.sprite.nextFrame()
 		player.moveUp(elapsed)
 		player.sprite.setAnimation("up")
@@ -58,9 +58,9 @@ func createInputHandler() *InputHandler {
 	return &InputHandler{keyboardState: sdl.GetKeyboardState(), start: time.Now(), timeControl: createTimeControl()}
 }
 
-func handleInput(entities map[string]*Entity, iHandler *InputHandler) {
-	for {
-		iHandler.handleInput(entities)
-		time.Sleep((tickRateMS / 3) * time.Millisecond)
-	}
-}
+// func handleInput(entities map[string]*Entity, iHandler *InputHandler) {
+// 	for {
+// 		iHandler.handleInput(entities)
+// 		time.Sleep((tickRateMS / 3) * time.Millisecond)
+// 	}
+// }

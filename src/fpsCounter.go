@@ -5,7 +5,7 @@ import "github.com/veandco/go-sdl2/sdl"
 func createFPSCounter() *Entity {
 	text := &Text{}
 
-	text.setFont("../assets/FreeSans.ttf", 24)
+	text.setFont("../assets/font/FreeSans.ttf", 24)
 	text.setColorRGB(255, 255, 255)
 	text.setBackgroundColorRGBA(0, 0, 0, 150)
 	text.setText("")
