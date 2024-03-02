@@ -1,18 +1,19 @@
 package main
 
 import (
+	"gorp/utils"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 type MouseHandler struct {
-	timeControl TimeControl
+	timeControl utils.TimeControl
 }
 
 func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
 
-	if !mHandler.timeControl.shouldExecute() {
+	if !mHandler.timeControl.ShouldExecute() {
 		return
 	}
 
@@ -41,5 +42,5 @@ func handleMouse(mHandler *MouseHandler, cam *Camera) {
 }
 
 func createMouseHandler() *MouseHandler {
-	return &MouseHandler{timeControl: *createTimeControl()}
+	return &MouseHandler{timeControl: *utils.CreateTimeControl()}
 }

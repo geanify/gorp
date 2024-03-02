@@ -1,8 +1,10 @@
 package gobj
 
+import "gorp/utils"
+
 type GameObject struct {
-	Position *Vec2
-	Size     *Vec2
+	Position *utils.Vec2
+	Size     *utils.Vec2
 	Speed    int32 //per tickrate
 	Physics  int32
 }
@@ -34,8 +36,8 @@ type GameObjectJSON struct {
 
 func (gObjJSON *GameObjectJSON) ToGameObject() *GameObject {
 	return &GameObject{
-		Position: &Vec2{X: gObjJSON.X, Y: gObjJSON.Y},
-		Size:     &Vec2{X: gObjJSON.W, Y: gObjJSON.H},
+		Position: &utils.Vec2{X: gObjJSON.X, Y: gObjJSON.Y},
+		Size:     &utils.Vec2{X: gObjJSON.W, Y: gObjJSON.H},
 		Speed:    gObjJSON.S,
 		Physics:  gObjJSON.P,
 	}

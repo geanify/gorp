@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gorp/utils"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -11,7 +12,7 @@ const tickRateMS = 100 //miliseconds
 type InputHandler struct {
 	keyboardState []uint8
 	start         time.Time
-	timeControl   *TimeControl
+	timeControl   *utils.TimeControl
 }
 
 func (iHandler *InputHandler) isKeyPressed(key int) bool {
@@ -19,10 +20,10 @@ func (iHandler *InputHandler) isKeyPressed(key int) bool {
 }
 
 func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
-	if !iHandler.timeControl.shouldExecute() {
+	if !iHandler.timeControl.ShouldExecute() {
 		return
 	}
-	elapsed := iHandler.timeControl.getElapsed()
+	elapsed := iHandler.timeControl.GetElapsed()
 
 	iHandler.keyboardState = sdl.GetKeyboardState()
 
@@ -55,7 +56,7 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 }
 
 func createInputHandler() *InputHandler {
-	return &InputHandler{keyboardState: sdl.GetKeyboardState(), start: time.Now(), timeControl: createTimeControl()}
+	return &InputHandler{keyboardState: sdl.GetKeyboardState(), start: time.Now(), timeControl: utils.CreateTimeControl()}
 }
 
 // func handleInput(entities map[string]*Entity, iHandler *InputHandler) {

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"gorp/gobj"
+	"gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -84,8 +86,11 @@ func loadEntities(tManager *TextureManager) map[string]*Entity {
 		currentAnimation: "down",
 	}
 	pos := &sdl.Rect{X: 100, Y: 100, W: 80, H: 80}
-
-	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1}
+	gObj := &gobj.GameObject{
+		Position: &utils.Vec2{},
+		Size:     &utils.Vec2{},
+	}
+	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1, gObject: gObj}
 	entities["player"] = &entity
 
 	return entities

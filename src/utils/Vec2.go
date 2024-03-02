@@ -1,4 +1,4 @@
-package gobj
+package utils
 
 type Vec2 struct {
 	X int32
