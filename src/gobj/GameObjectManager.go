@@ -1,4 +1,4 @@
-package main
+package gobj
 
 import (
 	"encoding/json"
@@ -11,19 +11,19 @@ type GameObjectManager struct {
 	gameObjects map[string]*GameObject
 }
 
-func createGameObjectManager() *GameObjectManager {
+func CreateGameObjectManager() *GameObjectManager {
 	return &GameObjectManager{gameObjects: make(map[string]*GameObject)}
 }
 
-func (gObjManager *GameObjectManager) get(id string) *GameObject {
+func (gObjManager *GameObjectManager) Get(id string) *GameObject {
 	return gObjManager.gameObjects[id]
 }
 
-func (gObjManager *GameObjectManager) set(id string, gObj *GameObject) {
+func (gObjManager *GameObjectManager) Set(id string, gObj *GameObject) {
 	gObjManager.gameObjects[id] = gObj
 }
 
-func (gObjManager *GameObjectManager) fromJSON(path string) {
+func (gObjManager *GameObjectManager) FromJSON(path string) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
@@ -37,7 +37,7 @@ func (gObjManager *GameObjectManager) fromJSON(path string) {
 	fmt.Println(payload)
 
 	for key, val := range payload {
-		gObjManager.set(key, val.toGameObject())
+		gObjManager.Set(key, val.ToGameObject())
 	}
 
 	// tManager.gameObjects = payload

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gorp/gobj"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -14,7 +15,7 @@ type Entity struct {
 	position   *sdl.Rect
 	speed      int32 //per tickrate
 	physics    int
-	gObject    *GameObject
+	gObject    *gobj.GameObject
 }
 
 func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
@@ -28,10 +29,10 @@ func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
 
 func (entity *Entity) getPosition(cam *Camera) *sdl.Rect {
 	return &sdl.Rect{
-		X: entity.gObject.position.X + cam.position.X,
-		Y: entity.gObject.position.Y + cam.position.Y,
-		W: entity.gObject.size.X,
-		H: entity.gObject.size.Y,
+		X: entity.gObject.Position.X + cam.position.X,
+		Y: entity.gObject.Position.Y + cam.position.Y,
+		W: entity.gObject.Size.X,
+		H: entity.gObject.Size.Y,
 	}
 }
 
@@ -73,20 +74,20 @@ func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam 
 
 func (entity *Entity) moveLeft(elapsed time.Duration) {
 	entity.position.X -= entity.speed
-	entity.gObject.moveLeft()
+	entity.gObject.MoveLeft()
 }
 
 func (entity *Entity) moveRight(elapsed time.Duration) {
 	entity.position.X += entity.speed
-	entity.gObject.moveRight()
+	entity.gObject.MoveRight()
 }
 
 func (entity *Entity) moveUp(elapsed time.Duration) {
 	entity.position.Y -= entity.speed
-	entity.gObject.moveUp()
+	entity.gObject.MoveUp()
 }
 
 func (entity *Entity) moveDown(elapsed time.Duration) {
 	entity.position.Y += entity.speed
-	entity.gObject.moveDown()
+	entity.gObject.MoveDown()
 }

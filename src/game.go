@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gorp/gobj"
 	"os"
 	"time"
 
@@ -37,8 +38,8 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	start := time.Now()
 	cycles := 0
 
-	gObjManager := createGameObjectManager()
-	gObjManager.fromJSON("./../assets/gobj.json")
+	gObjManager := gobj.CreateGameObjectManager()
+	gObjManager.FromJSON("./../assets/gobj.json")
 
 	tManager := createTextureManager(gameRenderer)
 	tManager.fromJSON("./../assets/textures.json")

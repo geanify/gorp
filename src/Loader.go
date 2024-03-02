@@ -84,13 +84,8 @@ func loadEntities(tManager *TextureManager) map[string]*Entity {
 		currentAnimation: "down",
 	}
 	pos := &sdl.Rect{X: 100, Y: 100, W: 80, H: 80}
-	gObj := &GameObject{
-		position: &Vec2{X: 100, Y: 100},
-		size:     &Vec2{X: 64, Y: 64},
-		speed:    15,
-		physics:  1,
-	}
-	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1, gObject: gObj}
+
+	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1}
 	entities["player"] = &entity
 
 	return entities
