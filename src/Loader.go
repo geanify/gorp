@@ -35,9 +35,9 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	return entity
 }
 
-func generateTileMap(renderer *sdl.Renderer) map[string]*Entity {
+func generateTileMap(renderer *sdl.Renderer, tManager *TextureManager) map[string]*Entity {
 	entities := make(map[string]*Entity)
-	texture := loadImageAsTexture("../assets/tileset-grass.png", renderer)
+	texture := tManager.textures["grass"]
 	for i := int32(0); i < 50; i++ {
 		for j := int32(0); j < 50; j++ {
 			textureName := fmt.Sprintf("z-texture-%d-%d", i, j)
@@ -50,12 +50,12 @@ func generateTileMap(renderer *sdl.Renderer) map[string]*Entity {
 	return entities
 }
 
-func loadEntities(texture *sdl.Texture, renderer *sdl.Renderer) map[string]*Entity {
+func loadEntities(renderer *sdl.Renderer, tManager *TextureManager) map[string]*Entity {
 	entities := make(map[string]*Entity)
 
 	rect := &sdl.Rect{X: 0, Y: 0, W: 64, H: 64}
 	sprite := Sprite{
-		texture:    texture,
+		texture:    tManager.textures["player"],
 		frame:      rect,
 		maxFrames:  4,
 		frameIndex: 0,

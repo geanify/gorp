@@ -37,8 +37,12 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 	start := time.Now()
 	cycles := 0
 
-	tileMap := generateTileMap(gameRenderer)
-	entities := loadEntities(texture, gameRenderer)
+	tManager := createTextureManager(gameRenderer)
+
+	tManager.fromJSON("./../assets/textures.json")
+
+	tileMap := generateTileMap(gameRenderer, tManager)
+	entities := loadEntities(gameRenderer, tManager)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
 	iHandler := createInputHandler()
