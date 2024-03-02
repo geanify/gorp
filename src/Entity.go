@@ -12,22 +12,10 @@ type Entity struct {
 	entityType int32
 	sprite     *Sprite
 	text       *Text
-	position   *sdl.Rect
-	speed      int32 //per tickrate
-	physics    int
 	gObject    *gobj.GameObject
 }
 
 func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
-	return &sdl.Rect{
-		X: entity.position.X + cam.position.X,
-		Y: entity.position.Y + cam.position.Y,
-		W: entity.position.W,
-		H: entity.position.H,
-	}
-}
-
-func (entity *Entity) getPosition(cam *Camera) *sdl.Rect {
 	return &sdl.Rect{
 		X: entity.gObject.Position.X + cam.position.X,
 		Y: entity.gObject.Position.Y + cam.position.Y,
@@ -36,8 +24,17 @@ func (entity *Entity) getPosition(cam *Camera) *sdl.Rect {
 	}
 }
 
+func (entity *Entity) getPosition() *sdl.Rect {
+	return &sdl.Rect{
+		X: entity.gObject.Position.X,
+		Y: entity.gObject.Position.Y,
+		W: entity.gObject.Size.X,
+		H: entity.gObject.Size.Y,
+	}
+}
+
 func (entity *Entity) shouldRender(cam *Camera) bool {
-	return entity.position.HasIntersection(cam.invertedPosition())
+	return entity.getPosition().HasIntersection(cam.invertedPosition())
 }
 
 func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *Camera) {
@@ -73,21 +70,17 @@ func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam 
 }
 
 func (entity *Entity) moveLeft(elapsed time.Duration) {
-	entity.position.X -= entity.speed
 	entity.gObject.MoveLeft()
 }
 
 func (entity *Entity) moveRight(elapsed time.Duration) {
-	entity.position.X += entity.speed
 	entity.gObject.MoveRight()
 }
 
 func (entity *Entity) moveUp(elapsed time.Duration) {
-	entity.position.Y -= entity.speed
 	entity.gObject.MoveUp()
 }
 
 func (entity *Entity) moveDown(elapsed time.Duration) {
-	entity.position.Y += entity.speed
 	entity.gObject.MoveDown()
 }

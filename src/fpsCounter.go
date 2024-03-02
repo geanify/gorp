@@ -1,6 +1,9 @@
 package main
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"gorp/gobj"
+	"gorp/utils"
+)
 
 func createFPSCounter() *Entity {
 	text := &Text{}
@@ -9,7 +12,10 @@ func createFPSCounter() *Entity {
 	text.setColorRGB(255, 255, 255)
 	text.setBackgroundColorRGBA(0, 0, 0, 150)
 	text.setText("")
-	fpsCounterPos := &sdl.Rect{X: 500, Y: 500, W: 100, H: 25}
-	fpsCounterEntity := &Entity{text: text, entityType: 1, position: fpsCounterPos}
+	gobj := &gobj.GameObject{
+		Position: &utils.Vec2{X: 500, Y: 500},
+		Size:     &utils.Vec2{X: 100, Y: 25},
+	}
+	fpsCounterEntity := &Entity{text: text, entityType: 1, gObject: gobj}
 	return fpsCounterEntity
 }

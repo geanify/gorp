@@ -39,7 +39,4 @@ func (gObjManager *GameObjectManager) FromJSON(path string) {
 	for key, val := range payload {
 		gObjManager.Set(key, val.ToGameObject())
 	}
-
-	// tManager.gameObjects = payload
-
 }
