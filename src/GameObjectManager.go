@@ -15,15 +15,15 @@ func createGameObjectManager() *GameObjectManager {
 	return &GameObjectManager{gameObjects: make(map[string]*GameObject)}
 }
 
-func (tManager *GameObjectManager) get(id string) *GameObject {
-	return tManager.gameObjects[id]
+func (gObjManager *GameObjectManager) get(id string) *GameObject {
+	return gObjManager.gameObjects[id]
 }
 
-func (tManager *GameObjectManager) set(id string, gObj *GameObject) {
-	tManager.gameObjects[id] = gObj
+func (gObjManager *GameObjectManager) set(id string, gObj *GameObject) {
+	gObjManager.gameObjects[id] = gObj
 }
 
-func (tManager *GameObjectManager) fromJSON(path string) {
+func (gObjManager *GameObjectManager) fromJSON(path string) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
@@ -35,6 +35,10 @@ func (tManager *GameObjectManager) fromJSON(path string) {
 	}
 
 	fmt.Println(payload)
+
+	for key, val := range payload {
+		gObjManager.set(key, val.toGameObject())
+	}
 
 	// tManager.gameObjects = payload
 
