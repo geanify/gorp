@@ -14,6 +14,7 @@ type Entity struct {
 	position   *sdl.Rect
 	speed      int32 //per tickrate
 	physics    int
+	gObject    *GameObject
 }
 
 func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
@@ -22,6 +23,15 @@ func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
 		Y: entity.position.Y + cam.position.Y,
 		W: entity.position.W,
 		H: entity.position.H,
+	}
+}
+
+func (entity *Entity) getPosition(cam *Camera) *sdl.Rect {
+	return &sdl.Rect{
+		X: entity.gObject.position.X + cam.position.X,
+		Y: entity.gObject.position.Y + cam.position.Y,
+		W: entity.gObject.size.X,
+		H: entity.gObject.size.Y,
 	}
 }
 
@@ -63,16 +73,20 @@ func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam 
 
 func (entity *Entity) moveLeft(elapsed time.Duration) {
 	entity.position.X -= entity.speed
+	entity.gObject.moveLeft()
 }
 
 func (entity *Entity) moveRight(elapsed time.Duration) {
 	entity.position.X += entity.speed
+	entity.gObject.moveRight()
 }
 
 func (entity *Entity) moveUp(elapsed time.Duration) {
 	entity.position.Y -= entity.speed
+	entity.gObject.moveUp()
 }
 
 func (entity *Entity) moveDown(elapsed time.Duration) {
 	entity.position.Y += entity.speed
+	entity.gObject.moveDown()
 }

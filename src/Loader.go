@@ -35,7 +35,7 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	return entity
 }
 
-func generateTileMap(renderer *sdl.Renderer, tManager *TextureManager) map[string]*Entity {
+func generateTileMap(tManager *TextureManager) map[string]*Entity {
 	entities := make(map[string]*Entity)
 	texture := tManager.textures["grass"]
 	for i := int32(0); i < 50; i++ {
@@ -50,7 +50,7 @@ func generateTileMap(renderer *sdl.Renderer, tManager *TextureManager) map[strin
 	return entities
 }
 
-func loadEntities(renderer *sdl.Renderer, tManager *TextureManager) map[string]*Entity {
+func loadEntities(tManager *TextureManager) map[string]*Entity {
 	entities := make(map[string]*Entity)
 
 	rect := &sdl.Rect{X: 0, Y: 0, W: 64, H: 64}
@@ -84,7 +84,13 @@ func loadEntities(renderer *sdl.Renderer, tManager *TextureManager) map[string]*
 		currentAnimation: "down",
 	}
 	pos := &sdl.Rect{X: 100, Y: 100, W: 80, H: 80}
-	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1}
+	gObj := &GameObject{
+		position: &Vec2{X: 100, Y: 100},
+		size:     &Vec2{X: 64, Y: 64},
+		speed:    15,
+		physics:  1,
+	}
+	entity := Entity{sprite: &sprite, position: pos, speed: 15, physics: 1, gObject: gObj}
 	entities["player"] = &entity
 
 	return entities
