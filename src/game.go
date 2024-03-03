@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gorp/gobj"
 	"os"
 	"time"
 
@@ -22,7 +23,7 @@ func handleQuit() {
 func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	t := time.Now()
 	elapsed := t.Sub(*start)
-
+	*cycles++
 	if elapsed.Seconds() < 1 {
 		return
 	}
@@ -33,12 +34,18 @@ func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	*cycles = 0
 }
 
-func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
+func gameLoop(gameRenderer *sdl.Renderer) {
 	start := time.Now()
 	cycles := 0
 
-	tileMap := generateTileMap(gameRenderer)
-	entities := loadEntities(texture, gameRenderer)
+	gObjManager := gobj.CreateGameObjectManager()
+	gObjManager.FromJSON("./../assets/gobj.json")
+
+	tManager := createTextureManager(gameRenderer)
+	tManager.fromJSON("./../assets/textures.json")
+
+	tileMap := generateTileMap(tManager)
+	entities := loadEntities(tManager, gObjManager)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
 	iHandler := createInputHandler()
@@ -52,12 +59,12 @@ func gameLoop(gameRenderer *sdl.Renderer, texture *sdl.Texture) {
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
-		handleFpsCounter(fpsCounter, &start, &cycles)
 
 		aRenderer.present()
 		iHandler.handleInput(entities)
 		mHandler.handleCameraMove(camera)
-		cycles++
+
+		handleFpsCounter(fpsCounter, &start, &cycles)
 
 		handleQuit()
 	}

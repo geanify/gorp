@@ -1,4 +1,4 @@
-module app
+module gorp
 
 go 1.22
 

@@ -1,16 +1,20 @@
 package main
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"gorp/utils"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 type AsyncRenderer struct {
-	timeControl  *TimeControl
+	timeControl  *utils.TimeControl
 	renderer     *sdl.Renderer
 	cam          *Camera
 	shouldRender bool
 }
 
 func (aRenderer *AsyncRenderer) clearRenderer() {
-	if !aRenderer.timeControl.shouldExecute() {
+	if !aRenderer.timeControl.ShouldExecute() {
 		return
 	}
 	aRenderer.renderer.Clear()
@@ -32,5 +36,5 @@ func (aRenderer *AsyncRenderer) present() {
 }
 
 func createARenderer(renderer *sdl.Renderer, cam *Camera) *AsyncRenderer {
-	return &AsyncRenderer{timeControl: createTimeControl(), renderer: renderer, cam: cam}
+	return &AsyncRenderer{timeControl: utils.CreateTimeControl(), renderer: renderer, cam: cam}
 }
