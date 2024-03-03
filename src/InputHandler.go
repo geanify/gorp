@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gorp/gobj"
 	"gorp/utils"
 	"time"
 
@@ -19,11 +20,36 @@ func (iHandler *InputHandler) isKeyPressed(key int) bool {
 	return iHandler.keyboardState[key] == 1
 }
 
-func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
+func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager) {
 	if !iHandler.timeControl.ShouldExecute() {
 		return
 	}
-	elapsed := iHandler.timeControl.GetElapsed()
+	iHandler.keyboardState = sdl.GetKeyboardState()
+
+	player := gameObjects.Get("player")
+
+	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
+		player.MoveLeft()
+	}
+	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
+		player.MoveRight()
+	}
+	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
+		player.MoveUp()
+	} else {
+		// player.sprite.nextFrame()
+		// player.moveDown(elapsed)
+		// player.sprite.setAnimation("down")
+	}
+	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
+		player.MoveDown()
+	}
+}
+
+func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
+	if !iHandler.timeControl.ShouldExecute() {
+		return
+	}
 
 	iHandler.keyboardState = sdl.GetKeyboardState()
 
@@ -31,26 +57,18 @@ func (iHandler *InputHandler) handleInput(entitiesMap map[string]*Entity) {
 
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.sprite.nextFrame()
-		player.moveLeft(elapsed)
 		player.sprite.setAnimation("left")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
 		player.sprite.nextFrame()
-		player.moveRight(elapsed)
 		player.sprite.setAnimation("right")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
 		player.sprite.nextFrame()
-		player.moveUp(elapsed)
 		player.sprite.setAnimation("up")
-	} else {
-		// player.sprite.nextFrame()
-		// player.moveDown(elapsed)
-		// player.sprite.setAnimation("down")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.sprite.nextFrame()
-		player.moveDown(elapsed)
 		player.sprite.setAnimation("down")
 	}
 }

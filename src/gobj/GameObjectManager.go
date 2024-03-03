@@ -2,7 +2,6 @@ package gobj
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 )
@@ -33,8 +32,6 @@ func (gObjManager *GameObjectManager) FromJSON(path string) {
 	if err != nil {
 		log.Fatal("Error during Unmarshal(): ", err)
 	}
-
-	fmt.Println(payload)
 
 	for key, val := range payload {
 		gObjManager.Set(key, val.ToGameObject())
