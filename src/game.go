@@ -48,7 +48,8 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	entities := loadEntities(tManager, gObjManager)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
-	iHandler := createInputHandler()
+	iHandlerAnimation := createInputHandler()
+	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
 
 	camera := createCamera()
@@ -61,7 +62,8 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 		aRenderer.handleRendering(entities)
 
 		aRenderer.present()
-		iHandler.handleInput(entities)
+		iHandlerAnimation.animationHandler(entities)
+		iHandlerMovement.handleMovement(gObjManager)
 		mHandler.handleCameraMove(camera)
 
 		handleFpsCounter(fpsCounter, &start, &cycles)

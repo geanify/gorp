@@ -64,7 +64,6 @@ func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam 
 	entities := maps.Values(entitiesMap)
 	for i := 0; i < len(entities); i++ {
 		entity := entities[i]
-
 		entity.render(renderer, cam)
 	}
 }
