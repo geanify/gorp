@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gorp/gobj"
+	"gorp/phy"
 	"gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -35,6 +36,7 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	gobj := &gobj.GameObject{
 		Position: &utils.Vec2{X: tileSize * i, Y: tileSize * j},
 		Size:     &utils.Vec2{X: 64, Y: 64},
+		Physics:  phy.CreatePhyObject(),
 	}
 	entity := &Entity{sprite: &sprite, gObject: gobj}
 	return entity
@@ -46,10 +48,13 @@ func generateTileMap(tManager *TextureManager) map[string]*Entity {
 	for i := int32(0); i < 50; i++ {
 		for j := int32(0); j < 50; j++ {
 			textureName := fmt.Sprintf("z-texture-%d-%d", i, j)
-			entities[textureName] = generateTileFromCoords(i, j, texture)
+			entity := generateTileFromCoords(i, j, texture)
+			// entity.sprite.setTextureColorMode(255, 0, 0)
+			entities[textureName] = entity
 			// if i == 0 || j == 0 || i == 13 || j == 13 {
 			// 	entities[textureName].physics = 1
 			// }
+
 		}
 	}
 	return entities

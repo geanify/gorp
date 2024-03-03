@@ -36,14 +36,12 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
 		player.MoveUp()
-	} else {
-		// player.sprite.nextFrame()
-		// player.moveDown(elapsed)
-		// player.sprite.setAnimation("down")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.MoveDown()
 	}
+
+	player.Move()
 }
 
 func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {

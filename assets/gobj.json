@@ -4,16 +4,14 @@
         "Y":2,
         "W":3,
         "H":4,
-        "S": 10,
-        "P": 1
+        "S": 10
     },
     "test2" :{
         "X":4,
         "Y":3,
         "W":2,
         "H":1,
-        "S": 10,
-        "P": 1
+        "S": 10
     },
     "player" :{
         "X":100,
@@ -21,6 +19,11 @@
         "W":64,
         "H":64,
         "S": 10,
-        "P": 1
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 100,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0}
+        }
     }
 } 
