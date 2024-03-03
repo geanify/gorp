@@ -28,6 +28,12 @@ func (pObj *PhyObject) Move(X int32, Y int32) {
 	pObj.UpdateVelocity()
 }
 
+func (pObj *PhyObject) SlowDown() {
+	pObj.SetAcceleration(0, 0)
+	pObj.CurrentVelocity.X /= 2
+	pObj.CurrentVelocity.Y /= 2
+}
+
 func (pObj *PhyObject) FreeFall() {
 	pObj.CurrentAcceleration.Y = 1
 	pObj.UpdateVelocity()

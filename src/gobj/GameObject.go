@@ -27,6 +27,10 @@ func (gObject *GameObject) MoveDown() {
 	gObject.Physics.Move(0, 10)
 }
 
+func (gObject *GameObject) SlowDown() {
+	gObject.Physics.SlowDown()
+}
+
 func (gObject *GameObject) Move() {
 	gObject.Position.X += gObject.Physics.CurrentVelocity.X
 	gObject.Position.Y += gObject.Physics.CurrentVelocity.Y

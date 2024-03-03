@@ -28,6 +28,7 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 
 	player := gameObjects.Get("player")
 
+	player.SlowDown()
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.MoveLeft()
 	}
