@@ -7,11 +7,18 @@
         "S": 10
     },
     "test2" :{
-        "X":4,
-        "Y":3,
-        "W":2,
-        "H":1,
-        "S": 10
+        "X":0,
+        "Y": 0,
+        "W":2000,
+        "H":64,
+        "S": 10,
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 100,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true
+        }
     },
     "player" :{
         "X":100,

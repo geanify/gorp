@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gorp/gobj"
 	"gorp/utils"
 	"time"
@@ -43,9 +42,7 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.MoveDown()
 	}
-	fmt.Println(gameObjects.Collisions)
 	if gameObjects.HasCollision("player") {
-		fmt.Println("ouch")
 		player.InvertMovement()
 	}
 
