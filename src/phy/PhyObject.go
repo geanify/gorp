@@ -7,10 +7,17 @@ type PhyObject struct {
 	TerminalVelocity    int
 	CurrentVelocity     *utils.Vec2
 	CurrentAcceleration *utils.Vec2
+	Solid               bool
 }
 
 func CreatePhyObject() *PhyObject {
-	return &PhyObject{Mass: 100, TerminalVelocity: 100, CurrentVelocity: &utils.Vec2{X: 0, Y: 0}, CurrentAcceleration: &utils.Vec2{X: 0, Y: 0}}
+	return &PhyObject{
+		Mass:                100,
+		TerminalVelocity:    100,
+		CurrentVelocity:     &utils.Vec2{X: 0, Y: 0},
+		CurrentAcceleration: &utils.Vec2{X: 0, Y: 0},
+		Solid:               false,
+	}
 }
 
 func (pObj *PhyObject) UpdateVelocity() {
@@ -21,6 +28,13 @@ func (pObj *PhyObject) UpdateVelocity() {
 func (pObj *PhyObject) SetAcceleration(X int32, Y int32) {
 	pObj.CurrentAcceleration.Y = Y
 	pObj.CurrentAcceleration.X = X
+}
+
+func (pObj *PhyObject) InvertMovement() {
+	pObj.CurrentAcceleration.Y = (-1) * pObj.CurrentAcceleration.Y
+	pObj.CurrentAcceleration.X = (-1) * pObj.CurrentAcceleration.X
+	pObj.CurrentVelocity.Y = (-1) * pObj.CurrentVelocity.Y
+	pObj.CurrentVelocity.X = (-1) * pObj.CurrentVelocity.X
 }
 
 func (pObj *PhyObject) Move(X int32, Y int32) {

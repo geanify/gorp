@@ -23,7 +23,8 @@
             "Mass": 100,
             "TerminalVelocity": 100,
             "CurrentVelocity": {"X": 0, "Y": 0},
-            "CurrentAcceleration": {"X": 0, "Y": 0}
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true
         }
     }
 } 
