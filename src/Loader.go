@@ -33,10 +33,14 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	if (i+j)%2 == 0 {
 		sprite.currentAnimation = "blue"
 	}
+	physics := phy.CreatePhyObject()
+	if i >= 10 || j >= 10 {
+		physics.Solid = true
+	}
 	gobj := &gobj.GameObject{
 		Position: &utils.Vec2{X: tileSize * i, Y: tileSize * j},
 		Size:     &utils.Vec2{X: 64, Y: 64},
-		Physics:  phy.CreatePhyObject(),
+		Physics:  physics,
 	}
 	entity := &Entity{sprite: &sprite, gObject: gobj}
 	return entity

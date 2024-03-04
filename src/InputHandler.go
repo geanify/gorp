@@ -28,6 +28,7 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 
 	player := gameObjects.Get("player")
 
+	gameObjects.GenerateCollisionMatrix()
 	player.SlowDown()
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.MoveLeft()
@@ -40,6 +41,9 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.MoveDown()
+	}
+	if gameObjects.HasCollision("player") {
+		player.InvertMovement()
 	}
 
 	player.Move()
