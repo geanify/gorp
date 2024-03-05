@@ -9,7 +9,7 @@ import (
 type AsyncRenderer struct {
 	timeControl  *utils.TimeControl
 	renderer     *sdl.Renderer
-	cam          *Camera
+	cam          *utils.Camera
 	shouldRender bool
 }
 
@@ -35,6 +35,6 @@ func (aRenderer *AsyncRenderer) present() {
 	aRenderer.shouldRender = false
 }
 
-func createARenderer(renderer *sdl.Renderer, cam *Camera) *AsyncRenderer {
+func createARenderer(renderer *sdl.Renderer, cam *utils.Camera) *AsyncRenderer {
 	return &AsyncRenderer{timeControl: utils.CreateTimeControl(), renderer: renderer, cam: cam}
 }

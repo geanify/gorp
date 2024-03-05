@@ -2,6 +2,7 @@ package main
 
 import (
 	"gorp/gobj"
+	"gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 	"golang.org/x/exp/maps"
@@ -14,10 +15,10 @@ type Entity struct {
 	gObject    *gobj.GameObject
 }
 
-func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
+func (entity *Entity) getAdjustedPos(cam *utils.Camera) *sdl.Rect {
 	return &sdl.Rect{
-		X: entity.gObject.GetDistanceAdjustedPosition().X + cam.position.X,
-		Y: entity.gObject.GetDistanceAdjustedPosition().Y + cam.position.Y,
+		X: entity.gObject.GetDistanceAdjustedPosition().X + cam.Position.X,
+		Y: entity.gObject.GetDistanceAdjustedPosition().Y + cam.Position.Y,
 		W: entity.gObject.GetDistanceAdjustedSize().X,
 		H: entity.gObject.GetDistanceAdjustedSize().Y,
 	}
@@ -32,19 +33,19 @@ func (entity *Entity) getPosition() *sdl.Rect {
 	}
 }
 
-func (entity *Entity) shouldRender(cam *Camera) bool {
-	return entity.getPosition().HasIntersection(cam.invertedPosition())
+func (entity *Entity) shouldRender(cam *utils.Camera) bool {
+	return entity.getPosition().HasIntersection(cam.InvertedPosition())
 }
 
-func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *Camera) {
+func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *utils.Camera) {
 	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.getAdjustedPos(cam))
 }
 
-func (entity *Entity) renderText(renderer *sdl.Renderer, cam *Camera) {
+func (entity *Entity) renderText(renderer *sdl.Renderer, cam *utils.Camera) {
 	entity.text.renderText(renderer, entity.getAdjustedPos(cam))
 }
 
-func (entity *Entity) render(renderer *sdl.Renderer, cam *Camera) {
+func (entity *Entity) render(renderer *sdl.Renderer, cam *utils.Camera) {
 
 	if !entity.shouldRender(cam) {
 		return
@@ -59,7 +60,7 @@ func (entity *Entity) render(renderer *sdl.Renderer, cam *Camera) {
 
 }
 
-func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam *Camera) {
+func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam *utils.Camera) {
 	entities := maps.Values(entitiesMap)
 	for i := 0; i < len(entities); i++ {
 		entity := entities[i]

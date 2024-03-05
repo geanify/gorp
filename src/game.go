@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gorp/gobj"
+	"gorp/utils"
 	"os"
 	"time"
 
@@ -52,7 +53,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
 
-	camera := createCamera()
+	camera := utils.CreateCamera()
 	aRenderer := createARenderer(gameRenderer, camera)
 
 	for {

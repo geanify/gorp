@@ -11,7 +11,7 @@ type MouseHandler struct {
 	timeControl utils.TimeControl
 }
 
-func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
+func (mHandler *MouseHandler) handleCameraMove(cam *utils.Camera) {
 
 	if !mHandler.timeControl.ShouldExecute() {
 		return
@@ -20,21 +20,21 @@ func (mHandler *MouseHandler) handleCameraMove(cam *Camera) {
 	x, y, _ := sdl.GetMouseState()
 
 	if x < 20 {
-		cam.moveRight()
+		cam.MoveRight()
 	}
 	if x > 780 {
-		cam.moveLeft()
+		cam.MoveLeft()
 	}
 	if y < 20 {
-		cam.moveDown()
+		cam.MoveDown()
 	}
 	if y > 580 {
-		cam.moveUp()
+		cam.MoveUp()
 	}
 
 }
 
-func handleMouse(mHandler *MouseHandler, cam *Camera) {
+func handleMouse(mHandler *MouseHandler, cam *utils.Camera) {
 	for {
 		mHandler.handleCameraMove(cam)
 		time.Sleep((tickRateMS / 3) * time.Millisecond)
