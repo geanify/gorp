@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gorp/gfx"
 	"gorp/gobj"
 	"gorp/utils"
 	"os"
@@ -30,7 +31,7 @@ func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	}
 
 	fpsString := fmt.Sprintf("%d fps", int(float64(*cycles)/elapsed.Seconds()))
-	fpsCounter.text.setText(fpsString)
+	fpsCounter.text.SetText(fpsString)
 	*start = time.Now()
 	*cycles = 0
 }
@@ -42,8 +43,8 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	gObjManager := gobj.CreateGameObjectManager()
 	gObjManager.FromJSON("./../assets/gobj.json")
 
-	tManager := createTextureManager(gameRenderer)
-	tManager.fromJSON("./../assets/textures.json")
+	tManager := gfx.CreateTextureManager(gameRenderer)
+	tManager.FromJSON("./../assets/textures.json")
 
 	tileMap := generateTileMap(tManager)
 	entities := loadEntities(tManager, gObjManager)

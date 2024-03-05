@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gorp/gfx"
 	"gorp/gobj"
 	"gorp/utils"
 
@@ -10,8 +11,8 @@ import (
 
 type Entity struct {
 	entityType int32
-	sprite     *Sprite
-	text       *Text
+	sprite     *gfx.Sprite
+	text       *gfx.Text
 	gObject    *gobj.GameObject
 }
 
@@ -38,11 +39,11 @@ func (entity *Entity) shouldRender(cam *utils.Camera) bool {
 }
 
 func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *utils.Camera) {
-	renderer.Copy(entity.sprite.texture, entity.sprite.getFrame(), entity.getAdjustedPos(cam))
+	renderer.Copy(entity.sprite.Texture, entity.sprite.GetFrame(), entity.getAdjustedPos(cam))
 }
 
 func (entity *Entity) renderText(renderer *sdl.Renderer, cam *utils.Camera) {
-	entity.text.renderText(renderer, entity.getAdjustedPos(cam))
+	entity.text.RenderText(renderer, entity.getAdjustedPos(cam))
 }
 
 func (entity *Entity) render(renderer *sdl.Renderer, cam *utils.Camera) {

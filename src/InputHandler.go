@@ -59,20 +59,20 @@ func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
 	player := entitiesMap["player"]
 
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("left")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("left")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("right")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("right")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("up")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("up")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("down")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("down")
 	}
 }
 
