@@ -27,7 +27,7 @@ func getRandomized(n int32) int32 {
 	return a
 }
 
-func (particle *Particle) GetNextFrame() {
+func (particle *Particle) GetNextPos() {
 	if particle.FrameIndex >= particle.MaxFrames {
 		if particle.Respawn {
 			particle.CurrentPos = *particle.InitialPos
@@ -46,6 +46,10 @@ func (particle *Particle) GetNextFrame() {
 	particle.CurrentPos.Y += y
 
 	particle.FrameIndex++
+}
+
+func (particle *Particle) GetNextFrame() {
+	particle.GetNextPos()
 }
 
 func (particle *Particle) getAdjustedPos(pos *sdl.Rect) *sdl.Rect {

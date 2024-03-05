@@ -54,7 +54,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
 
-	loadParticle(entities, gObjManager)
+	loadParticle(entities, tManager, gObjManager)
 
 	camera := utils.CreateCamera()
 	aRenderer := createARenderer(gameRenderer, camera)

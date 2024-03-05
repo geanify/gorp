@@ -11,9 +11,13 @@ type Sprite struct {
 	Animations       map[string]*Animation
 	FrameIndex       uint
 	CurrentAnimation string
+	Color            *sdl.Color
 }
 
 func (sprite *Sprite) NextFrame() {
+	if sprite.Animations == nil {
+		return
+	}
 	currentAnimation := sprite.Animations[sprite.CurrentAnimation]
 	currentAnimation.nextFrame()
 }
@@ -41,4 +45,13 @@ func (sprite *Sprite) SetBlendModeBlend() {
 
 func (sprite *Sprite) SetBlendModeMod() {
 	sprite.Texture.SetBlendMode(sdl.BLENDMODE_MOD)
+}
+
+func (sprite *Sprite) RenderColor(renderer *sdl.Renderer, pos *sdl.Rect) {
+	if sprite.Color == nil {
+		return
+	}
+	renderer.SetDrawColor(sprite.Color.R, sprite.Color.G, sprite.Color.B, sprite.Color.A)
+	renderer.FillRect(pos)
+	renderer.SetDrawColor(0, 0, 0, 255)
 }

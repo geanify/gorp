@@ -48,8 +48,20 @@ func (entity *Entity) shouldRender(cam *utils.Camera) bool {
 	return entity.getPosition().HasIntersection(cam.InvertedPosition())
 }
 
+func (entity *Entity) renderSpriteTexture(renderer *sdl.Renderer, cam *utils.Camera, parentPosition *sdl.Rect) {
+	renderer.Copy(
+		entity.sprite.Texture,
+		entity.sprite.GetFrame(),
+		entity.getAdjustedPos(cam, parentPosition),
+	)
+}
+
 func (entity *Entity) renderSprite(renderer *sdl.Renderer, cam *utils.Camera, parentPosition *sdl.Rect) {
-	renderer.Copy(entity.sprite.Texture, entity.sprite.GetFrame(), entity.getAdjustedPos(cam, parentPosition))
+	if entity.sprite.Texture == nil {
+		entity.sprite.RenderColor(renderer, entity.getAdjustedPos(cam, parentPosition))
+		return
+	}
+	entity.renderSpriteTexture(renderer, cam, parentPosition)
 }
 
 func (entity *Entity) renderText(renderer *sdl.Renderer, cam *utils.Camera, parentPosition *sdl.Rect) {
