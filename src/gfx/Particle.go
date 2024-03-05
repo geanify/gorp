@@ -15,6 +15,7 @@ type Particle struct {
 	FrameIndex uint
 	InitialPos *utils.Vec2
 	CurrentPos utils.Vec2
+	Sprite     *Sprite
 }
 
 func getRandomized(n int32) int32 {
@@ -28,7 +29,7 @@ func getRandomized(n int32) int32 {
 }
 
 func (particle *Particle) GetNextPos() {
-	if particle.FrameIndex >= particle.MaxFrames {
+	if particle.Sprite.FrameIndex >= particle.Sprite.MaxFrames {
 		if particle.Respawn {
 			particle.CurrentPos = *particle.InitialPos
 			particle.FrameIndex = 0
@@ -50,6 +51,7 @@ func (particle *Particle) GetNextPos() {
 
 func (particle *Particle) GetNextFrame() {
 	particle.GetNextPos()
+	particle.Sprite.NextFrame()
 }
 
 func (particle *Particle) getAdjustedPos(pos *sdl.Rect) *sdl.Rect {
@@ -67,7 +69,6 @@ func (particle *Particle) RenderParticle(renderer *sdl.Renderer, pos *sdl.Rect, 
 	}
 	particle.MaxSpeed = maxSpeed
 	particle.GetNextFrame()
-	renderer.SetDrawColor(255, 0, 0, 255)
-	renderer.FillRect(particle.getAdjustedPos(pos))
-	renderer.SetDrawColor(0, 0, 0, 255)
+	particle.Sprite.RenderColor(renderer, particle.getAdjustedPos(pos))
+
 }

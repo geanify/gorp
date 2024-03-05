@@ -105,20 +105,13 @@ func loadEntities(tManager *gfx.TextureManager, gObjManager *gobj.GameObjectMana
 	return entities
 }
 
-func loadParticle(entities map[string]*Entity, tManager *gfx.TextureManager, gObjManager *gobj.GameObjectManager) {
+func loadParticle(entities map[string]*Entity, gObjManager *gobj.GameObjectManager) {
 	gObj := gObjManager.Get("test")
 
-	particle := &gfx.Particle{
-		MaxFrames:  10,
-		MaxSpeed:   int32(10),
-		FrameIndex: 0,
-		InitialPos: &utils.Vec2{},
-		CurrentPos: utils.Vec2{},
-	}
 	rect := &sdl.Rect{X: 0, Y: 0, W: 64, H: 64}
 	sprite := &gfx.Sprite{
 		Frame:      rect,
-		MaxFrames:  4,
+		MaxFrames:  10,
 		FrameIndex: 0,
 		Animations: map[string]*gfx.Animation{
 			"red": {
@@ -128,9 +121,17 @@ func loadParticle(entities map[string]*Entity, tManager *gfx.TextureManager, gOb
 			},
 		},
 		CurrentAnimation: "red",
-		Color:            &sdl.Color{R: 255, G: 0, B: 0, A: 255},
+		Color:            &sdl.Color{R: 255, G: 255, B: 0, A: 255},
 	}
-
-	entity := Entity{entityType: 0, particle: particle, gObject: gObj, sprite: sprite}
+	particle := &gfx.Particle{
+		MaxFrames:  10,
+		Respawn:    true,
+		MaxSpeed:   int32(10),
+		FrameIndex: 0,
+		InitialPos: &utils.Vec2{},
+		CurrentPos: utils.Vec2{},
+		Sprite:     sprite,
+	}
+	entity := Entity{entityType: 2, particle: particle, gObject: gObj, sprite: sprite}
 	entities["test"] = &entity
 }
