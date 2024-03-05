@@ -57,7 +57,11 @@ func (entity *Entity) renderText(renderer *sdl.Renderer, cam *utils.Camera, pare
 }
 
 func (entity *Entity) renderParticle(renderer *sdl.Renderer, cam *utils.Camera, parentPosition *sdl.Rect) {
-	entity.particle.RenderParticle(renderer, entity.getAdjustedPos(cam, parentPosition))
+	entity.particle.RenderParticle(
+		renderer,
+		entity.getAdjustedPos(cam, parentPosition),
+		int32(entity.gObject.Physics.TerminalVelocity),
+	)
 }
 
 func (entity *Entity) render(renderer *sdl.Renderer, cam *utils.Camera, parentPosition *sdl.Rect) {

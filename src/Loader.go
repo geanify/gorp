@@ -104,3 +104,18 @@ func loadEntities(tManager *gfx.TextureManager, gObjManager *gobj.GameObjectMana
 
 	return entities
 }
+
+func loadParticle(entities map[string]*Entity, gObjManager *gobj.GameObjectManager) {
+	gObj := gObjManager.Get("test")
+
+	particle := &gfx.Particle{
+		MaxFrames:  10,
+		MaxSpeed:   int32(10),
+		FrameIndex: 0,
+		InitialPos: &utils.Vec2{},
+		CurrentPos: utils.Vec2{},
+	}
+
+	entity := Entity{entityType: 2, particle: particle, gObject: gObj}
+	entities["test"] = &entity
+}
