@@ -1,7 +1,7 @@
 package rpg
 
 type Unit struct {
-	Inventory Inventory
+	Inventory *Inventory
 	Stats     *Stats
 }
 
@@ -23,5 +23,13 @@ func (unit *Unit) Attack(defendingUnit *Unit) {
 	damage := attackerStats.Attack - defenderStats.Armor
 
 	defendingUnit.Stats.Health -= damage
+}
+
+func (unit *Unit) AttackMultiple(defendingUnits []*Unit) {
+
+	for i := 0; i < len(defendingUnits); i++ {
+		defendingUnit := defendingUnits[i]
+		unit.Attack(defendingUnit)
+	}
 
 }

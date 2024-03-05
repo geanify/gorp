@@ -3,6 +3,7 @@ package main
 import (
 	"gorp/gfx"
 	"gorp/gobj"
+	"gorp/rpg"
 	"gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -15,6 +16,7 @@ type Entity struct {
 	text       *gfx.Text
 	particle   *gfx.Particle
 	gObject    *gobj.GameObject
+	unit       *rpg.Unit
 	children   []*Entity
 }
 

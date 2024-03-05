@@ -5,6 +5,7 @@ import (
 	"gorp/gfx"
 	"gorp/gobj"
 	"gorp/phy"
+	"gorp/rpg"
 	"gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -99,7 +100,17 @@ func loadEntities(tManager *gfx.TextureManager, gObjManager *gobj.GameObjectMana
 		CurrentAnimation: "down",
 	}
 	gObj := gObjManager.Get("player")
-	entity := Entity{sprite: &sprite, gObject: gObj}
+
+	unit := &rpg.Unit{
+		Inventory: rpg.CreateNewInventory(10),
+		Stats: &rpg.Stats{
+			Health: 100,
+			Armor:  10,
+			Attack: 20,
+		},
+	}
+
+	entity := Entity{sprite: &sprite, gObject: gObj, unit: unit}
 	entities["player"] = &entity
 
 	return entities
