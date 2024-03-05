@@ -8,6 +8,8 @@ import (
 )
 
 type Particle struct {
+	Respawn    bool
+	stopRender bool
 	MaxFrames  uint
 	MaxSpeed   int32
 	FrameIndex uint
@@ -15,15 +17,30 @@ type Particle struct {
 	CurrentPos utils.Vec2
 }
 
+func getRandomized(n int32) int32 {
+	a := rand.Int31n(n)
+	neg := rand.Int31n(2)
+
+	if neg == 1 {
+		return (-1) * a
+	}
+	return a
+}
+
 func (particle *Particle) GetNextFrame() {
 	if particle.FrameIndex >= particle.MaxFrames {
-		particle.CurrentPos = *particle.InitialPos
-		particle.FrameIndex = 0
-		return
+		if particle.Respawn {
+			particle.CurrentPos = *particle.InitialPos
+			particle.FrameIndex = 0
+			return
+		} else {
+			particle.stopRender = true
+			return
+		}
 	}
 
-	x := rand.Int31n(particle.MaxSpeed)
-	y := rand.Int31n(particle.MaxSpeed)
+	x := getRandomized(particle.MaxSpeed)
+	y := getRandomized(particle.MaxSpeed)
 
 	particle.CurrentPos.X += x
 	particle.CurrentPos.Y += y
@@ -41,8 +58,12 @@ func (particle *Particle) getAdjustedPos(pos *sdl.Rect) *sdl.Rect {
 }
 
 func (particle *Particle) RenderParticle(renderer *sdl.Renderer, pos *sdl.Rect, maxSpeed int32) {
+	if particle.stopRender {
+		return
+	}
 	particle.MaxSpeed = maxSpeed
 	particle.GetNextFrame()
-
+	renderer.SetDrawColor(255, 0, 0, 255)
 	renderer.FillRect(particle.getAdjustedPos(pos))
+	renderer.SetDrawColor(0, 0, 0, 255)
 }
