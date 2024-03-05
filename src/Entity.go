@@ -16,19 +16,19 @@ type Entity struct {
 
 func (entity *Entity) getAdjustedPos(cam *Camera) *sdl.Rect {
 	return &sdl.Rect{
-		X: entity.gObject.Position.X + cam.position.X,
-		Y: entity.gObject.Position.Y + cam.position.Y,
-		W: entity.gObject.Size.X,
-		H: entity.gObject.Size.Y,
+		X: entity.gObject.GetDistanceAdjustedPosition().X + cam.position.X,
+		Y: entity.gObject.GetDistanceAdjustedPosition().Y + cam.position.Y,
+		W: entity.gObject.GetDistanceAdjustedSize().X,
+		H: entity.gObject.GetDistanceAdjustedSize().Y,
 	}
 }
 
 func (entity *Entity) getPosition() *sdl.Rect {
 	return &sdl.Rect{
-		X: entity.gObject.Position.X,
-		Y: entity.gObject.Position.Y,
-		W: entity.gObject.Size.X,
-		H: entity.gObject.Size.Y,
+		X: entity.gObject.GetDistanceAdjustedPosition().X,
+		Y: entity.gObject.GetDistanceAdjustedPosition().Y,
+		W: entity.gObject.GetDistanceAdjustedSize().X,
+		H: entity.gObject.GetDistanceAdjustedSize().Y,
 	}
 }
 

@@ -11,6 +11,39 @@ type GameObject struct {
 	Physics  *phy.PhyObject
 }
 
+func (gObject *GameObject) GetDistanceAdjustedPosition() *utils.Vec2 {
+
+	if gObject.Physics == nil {
+		return gObject.Position
+	}
+	if gObject.Physics.DistanceFromCam == 0 {
+		return gObject.Position
+	}
+
+	distanceSq := gObject.Physics.DistanceFromCam * gObject.Physics.DistanceFromCam
+
+	return &utils.Vec2{
+		X: gObject.Position.X / int32(distanceSq),
+		Y: gObject.Position.Y / int32(distanceSq),
+	}
+}
+
+func (gObject *GameObject) GetDistanceAdjustedSize() *utils.Vec2 {
+	if gObject.Physics == nil {
+		return gObject.Size
+	}
+	if gObject.Physics.DistanceFromCam == 0 {
+		return gObject.Size
+	}
+
+	distanceSq := gObject.Physics.DistanceFromCam * gObject.Physics.DistanceFromCam
+
+	return &utils.Vec2{
+		X: gObject.Size.X / int32(distanceSq),
+		Y: gObject.Size.Y / int32(distanceSq),
+	}
+}
+
 func (gObject *GameObject) MoveLeft() {
 	gObject.Physics.Move(-10, 0)
 }

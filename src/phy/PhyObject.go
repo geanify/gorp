@@ -8,6 +8,7 @@ type PhyObject struct {
 	CurrentVelocity     *utils.Vec2
 	CurrentAcceleration *utils.Vec2
 	Solid               bool
+	DistanceFromCam     int
 }
 
 func CreatePhyObject() *PhyObject {

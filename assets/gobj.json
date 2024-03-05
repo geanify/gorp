@@ -4,7 +4,15 @@
         "Y":2,
         "W":3,
         "H":4,
-        "S": 10
+        "S": 10,
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 100,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true,
+            "DistanceFromCam": 1
+        }
     },
     "test2" :{
         "X":0,
@@ -17,7 +25,8 @@
             "TerminalVelocity": 100,
             "CurrentVelocity": {"X": 0, "Y": 0},
             "CurrentAcceleration": {"X": 0, "Y": 0},
-            "Solid" : true
+            "Solid" : true,
+            "DistanceFromCam": 1
         }
     },
     "player" :{
@@ -31,7 +40,8 @@
             "TerminalVelocity": 100,
             "CurrentVelocity": {"X": 0, "Y": 0},
             "CurrentAcceleration": {"X": 0, "Y": 0},
-            "Solid" : true
+            "Solid" : true,
+            "DistanceFromCam": 1
         }
     }
 } 
