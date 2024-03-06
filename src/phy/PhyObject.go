@@ -9,6 +9,7 @@ type PhyObject struct {
 	CurrentAcceleration *utils.Vec2
 	Solid               bool
 	DistanceFromCam     int
+	LightCastDistance   int
 }
 
 func CreatePhyObject() *PhyObject {
@@ -18,6 +19,8 @@ func CreatePhyObject() *PhyObject {
 		CurrentVelocity:     &utils.Vec2{X: 0, Y: 0},
 		CurrentAcceleration: &utils.Vec2{X: 0, Y: 0},
 		Solid:               false,
+		DistanceFromCam:     0,
+		LightCastDistance:   0,
 	}
 }
 

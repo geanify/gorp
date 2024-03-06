@@ -11,7 +11,8 @@
             "CurrentVelocity": {"X": 0, "Y": 0},
             "CurrentAcceleration": {"X": 0, "Y": 0},
             "Solid" : true,
-            "DistanceFromCam": 1
+            "DistanceFromCam": 1,
+            "LightCastDistance": 5
         }
     },
     "test2" :{
@@ -26,7 +27,8 @@
             "CurrentVelocity": {"X": 0, "Y": 0},
             "CurrentAcceleration": {"X": 0, "Y": 0},
             "Solid" : true,
-            "DistanceFromCam": 1
+            "DistanceFromCam": 1,
+            "LightCastDistance": 5
         }
     },
     "player" :{
@@ -41,7 +43,8 @@
             "CurrentVelocity": {"X": 0, "Y": 0},
             "CurrentAcceleration": {"X": 0, "Y": 0},
             "Solid" : true,
-            "DistanceFromCam": 1
+            "DistanceFromCam": 1,
+            "LightCastDistance": 5
         }
     }
 } 
