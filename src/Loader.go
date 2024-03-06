@@ -39,12 +39,12 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	if i >= 10 || j >= 10 {
 		physics.Solid = true
 	}
-	gobj := &gobj.GameObject{
+	gobj1 := &gobj.GameObject{
 		Position: &utils.Vec2{X: tileSize * i, Y: tileSize * j},
 		Size:     &utils.Vec2{X: 64, Y: 64},
 		Physics:  physics,
 	}
-	entity := &Entity{sprite: &sprite, gObject: gobj}
+	entity := &Entity{sprite: &sprite, gObject: gobj1}
 	return entity
 }
 

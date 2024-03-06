@@ -51,7 +51,9 @@ func (sprite *Sprite) RenderColor(renderer *sdl.Renderer, pos *sdl.Rect) {
 	if sprite.Color == nil {
 		return
 	}
+	renderer.SetDrawBlendMode(sdl.BLENDMODE_BLEND)
 	renderer.SetDrawColor(sprite.Color.R, sprite.Color.G, sprite.Color.B, sprite.Color.A)
 	renderer.FillRect(pos)
 	renderer.SetDrawColor(0, 0, 0, 255)
+	renderer.SetDrawBlendMode(sdl.BLENDMODE_MOD)
 }

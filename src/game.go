@@ -48,6 +48,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	tManager.FromJSON("./../assets/textures.json")
 
 	tileMap := generateTileMap(tManager)
+	fowMap := generateFogOfWar()
 	entities := loadEntities(tManager, gObjManager)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
@@ -68,6 +69,8 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
+
+		aRenderer.handleRendering(fowMap)
 
 		aRenderer.present()
 		iHandlerAnimation.animationHandler(entities, audio)
