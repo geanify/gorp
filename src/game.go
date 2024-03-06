@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorp/gfx"
 	"gorp/gobj"
+	"gorp/sfx"
 	"gorp/utils"
 	"os"
 	"time"
@@ -54,7 +55,10 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
 
-	loadParticle(entities, gObjManager)
+	audio := sfx.CreateAudio()
+	audio.GenerateChunks()
+
+	loadParticle(entities, gObjManager, tManager)
 
 	camera := utils.CreateCamera()
 	aRenderer := createARenderer(gameRenderer, camera)
@@ -66,7 +70,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 		aRenderer.handleRendering(entities)
 
 		aRenderer.present()
-		iHandlerAnimation.animationHandler(entities)
+		iHandlerAnimation.animationHandler(entities, audio)
 		iHandlerMovement.handleMovement(gObjManager)
 		mHandler.handleCameraMove(camera)
 

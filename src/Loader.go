@@ -116,23 +116,44 @@ func loadEntities(tManager *gfx.TextureManager, gObjManager *gobj.GameObjectMana
 	return entities
 }
 
-func loadParticle(entities map[string]*Entity, gObjManager *gobj.GameObjectManager) {
+func loadParticle(entities map[string]*Entity, gObjManager *gobj.GameObjectManager, tManager *gfx.TextureManager) {
 	gObj := gObjManager.Get("test")
 
 	rect := &sdl.Rect{X: 0, Y: 0, W: 64, H: 64}
 	sprite := &gfx.Sprite{
+		Texture:    tManager.Textures["player"],
 		Frame:      rect,
-		MaxFrames:  10,
+		MaxFrames:  4,
 		FrameIndex: 0,
 		Animations: map[string]*gfx.Animation{
-			"red": {
-				StartFrame:     &sdl.Rect{X: 0, Y: 0, W: 64, H: 64},
-				AmountOfFrames: 1,
+			// "red": {
+			// 	StartFrame:     &sdl.Rect{X: 0, Y: 0, W: 64, H: 64},
+			// 	AmountOfFrames: 1,
+			// 	FrameIndex:     0,
+			// },
+			"down": {
+				StartFrame:     &sdl.Rect{X: 64, Y: 0, W: 64, H: 64},
+				AmountOfFrames: 4,
+				FrameIndex:     0,
+			},
+			"left": {
+				StartFrame:     &sdl.Rect{X: 64, Y: 64, W: 64, H: 64},
+				AmountOfFrames: 4,
+				FrameIndex:     0,
+			},
+			"right": {
+				StartFrame:     &sdl.Rect{X: 64, Y: 128, W: 64, H: 64},
+				AmountOfFrames: 4,
+				FrameIndex:     0,
+			},
+			"up": {
+				StartFrame:     &sdl.Rect{X: 64, Y: 192, W: 64, H: 64},
+				AmountOfFrames: 4,
 				FrameIndex:     0,
 			},
 		},
-		CurrentAnimation: "red",
-		Color:            &sdl.Color{R: 255, G: 255, B: 0, A: 255},
+		CurrentAnimation: "down",
+		// Color:            &sdl.Color{R: 255, G: 255, B: 0, A: 255},
 	}
 	particle := &gfx.Particle{
 		MaxFrames:  10,

@@ -69,6 +69,14 @@ func (particle *Particle) RenderParticle(renderer *sdl.Renderer, pos *sdl.Rect, 
 	}
 	particle.MaxSpeed = maxSpeed
 	particle.GetNextFrame()
-	particle.Sprite.RenderColor(renderer, particle.getAdjustedPos(pos))
+	if particle.Sprite.Texture != nil {
+		renderer.Copy(
+			particle.Sprite.Texture,
+			particle.Sprite.GetFrame(),
+			particle.getAdjustedPos(pos),
+		)
+	} else {
+		particle.Sprite.RenderColor(renderer, particle.getAdjustedPos(pos))
+	}
 
 }

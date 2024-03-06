@@ -2,6 +2,7 @@ package main
 
 import (
 	"gorp/gobj"
+	"gorp/sfx"
 	"gorp/utils"
 	"time"
 
@@ -49,7 +50,7 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 	player.Move()
 }
 
-func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
+func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity, audio *sfx.Audio) {
 	if !iHandler.timeControl.ShouldExecute() {
 		return
 	}
@@ -57,7 +58,9 @@ func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
 	iHandler.keyboardState = sdl.GetKeyboardState()
 
 	player := entitiesMap["player"]
-
+	if iHandler.isKeyPressed(sdl.SCANCODE_SPACE) {
+		go audio.PlayTrack("test1")
+	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.sprite.NextFrame()
 		player.sprite.SetAnimation("left")
