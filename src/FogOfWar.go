@@ -10,24 +10,38 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func generatePosition(i int32, j int32) *utils.Vec2 {
-	return &utils.Vec2{X: tileSize * i, Y: tileSize * j}
+type FogOfWar struct {
+	timeControl *utils.TimeControl
+	size        int
+	tiles       map[string]*Entity
+	fog         map[string]*Entity
 }
 
-func calculateDistance(pos1 *utils.Vec2, pos2 *utils.Vec2) int {
-
-	return int(math.Abs(float64(pos1.X-pos2.X)) + math.Abs(float64(pos1.Y-pos2.Y)))
+func CreateFogOfWar(size int, tileMap map[string]*Entity) *FogOfWar {
+	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl()}
+	fow.GenerateFogOfWar(tileMap)
+	return fow
 }
 
-func getColor(pos *utils.Vec2, entities map[string]*Entity) *sdl.Color {
+func (fow *FogOfWar) GeneratePosition(i int32, j int32) *utils.Vec2 {
+	return &utils.Vec2{X: int32(fow.size) * i, Y: int32(fow.size) * j}
+}
+
+func (fow *FogOfWar) CalculateDistance(pos1 *utils.Vec2, pos2 *utils.Vec2) int {
+	deltaX := int(math.Abs(float64(pos1.X - pos2.X)))
+	deltaY := int(math.Abs(float64(pos1.Y - pos2.Y)))
+	return deltaX + deltaY
+}
+
+func (fow *FogOfWar) GetColor(pos *utils.Vec2, entities map[string]*Entity) *sdl.Color {
 	alpha := uint8(125)
 
 	for _, entity := range entities {
-		distance := calculateDistance(pos, entity.gObject.Position)
+		distance := fow.CalculateDistance(pos, entity.gObject.Position)
 		if entity.gObject.Physics == nil {
 			continue
 		}
-		if distance < entity.gObject.Physics.LightCastDistance*64 {
+		if distance < entity.gObject.Physics.LightCastDistance*fow.size {
 			alpha = 0
 		}
 	}
@@ -35,16 +49,16 @@ func getColor(pos *utils.Vec2, entities map[string]*Entity) *sdl.Color {
 	return &sdl.Color{R: 0, G: 0, B: 0, A: alpha}
 }
 
-func generateFowFromTiles(i int32, j int32, entities map[string]*Entity) *Entity {
+func (fow *FogOfWar) GenerateFowFromTiles(i int32, j int32) *Entity {
 
-	position := generatePosition(i, j)
+	position := fow.GeneratePosition(i, j)
 	childSprite := gfx.Sprite{
 		MaxFrames:  0,
 		FrameIndex: 0,
-		Color:      getColor(position, entities),
+		Color:      fow.GetColor(position, fow.tiles),
 		Animations: map[string]*gfx.Animation{
 			"red": {
-				StartFrame:     &sdl.Rect{X: 0, Y: 0, W: 64, H: 64},
+				StartFrame:     &sdl.Rect{X: 0, Y: 0, W: int32(fow.size), H: int32(fow.size)},
 				AmountOfFrames: 1,
 				FrameIndex:     0,
 			},
@@ -54,7 +68,7 @@ func generateFowFromTiles(i int32, j int32, entities map[string]*Entity) *Entity
 
 	gobj2 := &gobj.GameObject{
 		Position: position,
-		Size:     &utils.Vec2{X: 64, Y: 64},
+		Size:     &utils.Vec2{X: int32(fow.size), Y: int32(fow.size)},
 	}
 	entity := &Entity{
 		sprite:  &childSprite,
@@ -63,21 +77,25 @@ func generateFowFromTiles(i int32, j int32, entities map[string]*Entity) *Entity
 	return entity
 }
 
-func updateFogOfWar(fowEntities map[string]*Entity, entities map[string]*Entity) {
-	for _, entity := range fowEntities {
-		entity.sprite.Color = getColor(entity.gObject.Position, entities)
+func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
+	if !fow.timeControl.ShouldExecute() {
+		return
+	}
+	for _, entity := range fow.fog {
+		entity.sprite.Color = fow.GetColor(entity.gObject.Position, entities)
 	}
 }
 
-func generateFogOfWar(entities map[string]*Entity) map[string]*Entity {
+func (fow *FogOfWar) GenerateFogOfWar(tiles map[string]*Entity) {
+	fow.tiles = tiles
 	fowEntities := make(map[string]*Entity)
-	for i := int32(0); i < 50; i++ {
-		for j := int32(0); j < 50; j++ {
+	for i := int32(0); i < (50*64)/int32(fow.size); i++ {
+		for j := int32(0); j < (50*64)/int32(fow.size); j++ {
 			textureName := fmt.Sprintf("z-fow-%d-%d", i, j)
-			entity := generateFowFromTiles(i, j, entities)
+			entity := fow.GenerateFowFromTiles(i, j)
 			fowEntities[textureName] = entity
 
 		}
 	}
-	return fowEntities
+	fow.fog = fowEntities
 }
