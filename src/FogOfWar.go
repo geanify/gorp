@@ -55,7 +55,7 @@ func (fow *FogOfWar) GenerateFowFromTiles(i int32, j int32) *Entity {
 	childSprite := gfx.Sprite{
 		MaxFrames:  0,
 		FrameIndex: 0,
-		Color:      fow.GetColor(position, fow.tiles),
+		Color:      &sdl.Color{R: 0, G: 0, B: 0, A: 255},
 		Animations: map[string]*gfx.Animation{
 			"red": {
 				StartFrame:     &sdl.Rect{X: 0, Y: 0, W: int32(fow.size), H: int32(fow.size)},
@@ -89,8 +89,8 @@ func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
 func (fow *FogOfWar) GenerateFogOfWar(tiles map[string]*Entity) {
 	fow.tiles = tiles
 	fowEntities := make(map[string]*Entity)
-	for i := int32(0); i < (50*64)/int32(fow.size); i++ {
-		for j := int32(0); j < (50*64)/int32(fow.size); j++ {
+	for i := int32(0); i < 50*(64/int32(fow.size)); i++ {
+		for j := int32(0); j < 50*(64/int32(fow.size)); j++ {
 			textureName := fmt.Sprintf("z-fow-%d-%d", i, j)
 			entity := fow.GenerateFowFromTiles(i, j)
 			fowEntities[textureName] = entity
