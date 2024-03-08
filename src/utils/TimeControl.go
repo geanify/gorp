@@ -2,7 +2,8 @@ package utils
 
 import "time"
 
-const TickRateMS = 100 //miliseconds
+const tickRateHz = 25
+const TickRateMS = 1000 / tickRateHz //miliseconds
 
 type TimeControl struct {
 	start time.Time

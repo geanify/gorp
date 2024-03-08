@@ -1,26 +1,50 @@
 {
     "test" :{
-        "X":1,
-        "Y":2,
-        "W":3,
-        "H":4,
-        "S": 10,
-        "P": 1
-    },
-    "test2" :{
-        "X":4,
-        "Y":3,
-        "W":2,
-        "H":1,
-        "S": 10,
-        "P": 1
-    },
-    "player" :{
         "X":100,
         "Y":100,
+        "W":20,
+        "H":20,
+        "S": 10,
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 10,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true,
+            "DistanceFromCam": 1,
+            "LightCastDistance": 5
+        }
+    },
+    "test2" :{
+        "X":0,
+        "Y": 0,
+        "W":2000,
+        "H":64,
+        "S": 10,
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 100,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true,
+            "DistanceFromCam": 1,
+            "LightCastDistance": 5
+        }
+    },
+    "player" :{
+        "X":200,
+        "Y":200,
         "W":64,
         "H":64,
         "S": 10,
-        "P": 1
+        "P": {
+            "Mass": 100,
+            "TerminalVelocity": 100,
+            "CurrentVelocity": {"X": 0, "Y": 0},
+            "CurrentAcceleration": {"X": 0, "Y": 0},
+            "Solid" : true,
+            "DistanceFromCam": 1,
+            "LightCastDistance": 10
+        }
     }
 } 

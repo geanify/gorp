@@ -2,13 +2,12 @@ package main
 
 import (
 	"gorp/gobj"
+	"gorp/sfx"
 	"gorp/utils"
 	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
-
-const tickRateMS = 100 //miliseconds
 
 type InputHandler struct {
 	keyboardState []uint8
@@ -28,6 +27,9 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 
 	player := gameObjects.Get("player")
 
+	gameObjects.GenerateCollisionMatrix()
+
+	player.SlowDown()
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.MoveLeft()
 	}
@@ -36,17 +38,19 @@ func (iHandler *InputHandler) handleMovement(gameObjects *gobj.GameObjectManager
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
 		player.MoveUp()
-	} else {
-		// player.sprite.nextFrame()
-		// player.moveDown(elapsed)
-		// player.sprite.setAnimation("down")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
 		player.MoveDown()
 	}
+
+	if gameObjects.HasCollision("player") {
+		player.InvertMovement()
+	}
+
+	player.Move()
 }
 
-func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
+func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity, audio *sfx.Audio) {
 	if !iHandler.timeControl.ShouldExecute() {
 		return
 	}
@@ -54,22 +58,24 @@ func (iHandler *InputHandler) animationHandler(entitiesMap map[string]*Entity) {
 	iHandler.keyboardState = sdl.GetKeyboardState()
 
 	player := entitiesMap["player"]
-
+	if iHandler.isKeyPressed(sdl.SCANCODE_SPACE) {
+		go audio.PlayTrack("test1")
+	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("left")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("left")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("right")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("right")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("up")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("up")
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		player.sprite.nextFrame()
-		player.sprite.setAnimation("down")
+		player.sprite.NextFrame()
+		player.sprite.SetAnimation("down")
 	}
 }
 

@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"gorp/gfx"
 	"gorp/gobj"
+	"gorp/sfx"
+	"gorp/utils"
 	"os"
 	"time"
 
@@ -29,7 +32,7 @@ func handleFpsCounter(fpsCounter *Entity, start *time.Time, cycles *int) {
 	}
 
 	fpsString := fmt.Sprintf("%d fps", int(float64(*cycles)/elapsed.Seconds()))
-	fpsCounter.text.setText(fpsString)
+	fpsCounter.text.SetText(fpsString)
 	*start = time.Now()
 	*cycles = 0
 }
@@ -41,18 +44,24 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	gObjManager := gobj.CreateGameObjectManager()
 	gObjManager.FromJSON("./../assets/gobj.json")
 
-	tManager := createTextureManager(gameRenderer)
-	tManager.fromJSON("./../assets/textures.json")
+	tManager := gfx.CreateTextureManager(gameRenderer)
+	tManager.FromJSON("./../assets/textures.json")
 
 	tileMap := generateTileMap(tManager)
 	entities := loadEntities(tManager, gObjManager)
+	fow := CreateFogOfWar(32, tileMap)
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
 	iHandlerAnimation := createInputHandler()
 	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
 
-	camera := createCamera()
+	audio := sfx.CreateAudio()
+	audio.GenerateChunks()
+
+	loadParticle(entities, gObjManager, tManager)
+
+	camera := utils.CreateCamera()
 	aRenderer := createARenderer(gameRenderer, camera)
 
 	for {
@@ -60,9 +69,11 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 		aRenderer.handleRendering(tileMap)
 
 		aRenderer.handleRendering(entities)
+		fow.UpdateFogOfWar(entities)
+		aRenderer.handleRendering(fow.fog)
 
 		aRenderer.present()
-		iHandlerAnimation.animationHandler(entities)
+		iHandlerAnimation.animationHandler(entities, audio)
 		iHandlerMovement.handleMovement(gObjManager)
 		mHandler.handleCameraMove(camera)
 
