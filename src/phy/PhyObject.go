@@ -41,6 +41,13 @@ func (pObj *PhyObject) InvertMovement() {
 	pObj.CurrentVelocity.X = (-1) * pObj.CurrentVelocity.X
 }
 
+func (pObj *PhyObject) InvertAcceleration() {
+	pObj.CurrentAcceleration.Y = (-1) * pObj.CurrentAcceleration.Y
+	pObj.CurrentAcceleration.X = (-1) * pObj.CurrentAcceleration.X
+	pObj.CurrentVelocity.Y = 0
+	pObj.CurrentVelocity.X = 0
+}
+
 func (pObj *PhyObject) Move(X int32, Y int32) {
 	pObj.SetAcceleration(X, Y)
 	pObj.UpdateVelocity()

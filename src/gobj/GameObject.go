@@ -64,6 +64,10 @@ func (gObject *GameObject) InvertMovement() {
 	gObject.Physics.InvertMovement()
 }
 
+func (gObject *GameObject) InvertAcceleration() {
+	gObject.Physics.InvertAcceleration()
+}
+
 func (gObject *GameObject) SlowDown() {
 	gObject.Physics.SlowDown()
 }

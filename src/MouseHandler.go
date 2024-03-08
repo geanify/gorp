@@ -2,7 +2,6 @@ package main
 
 import (
 	"gorp/utils"
-	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -37,7 +36,6 @@ func (mHandler *MouseHandler) handleCameraMove(cam *utils.Camera) {
 func handleMouse(mHandler *MouseHandler, cam *utils.Camera) {
 	for {
 		mHandler.handleCameraMove(cam)
-		time.Sleep((tickRateMS / 3) * time.Millisecond)
 	}
 }
 
