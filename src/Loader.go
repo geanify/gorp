@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gorp/gfx"
 	"gorp/gobj"
 	"gorp/phy"
@@ -48,15 +47,16 @@ func generateTileFromCoords(i int32, j int32, texture *sdl.Texture) *Entity {
 	return entity
 }
 
-func generateTileMap(tManager *gfx.TextureManager) map[string]*Entity {
-	entities := make(map[string]*Entity)
+func generateTileMap(tManager *gfx.TextureManager) [][]*Entity {
+	entities := make([][]*Entity, 0)
 	texture := tManager.Textures["grass"]
 	for i := int32(0); i < 50; i++ {
+		entityRow := make([]*Entity, 0)
+		entities = append(entities, entityRow)
 		for j := int32(0); j < 50; j++ {
-			textureName := fmt.Sprintf("z-texture-%d-%d", i, j)
 			entity := generateTileFromCoords(i, j, texture)
 			// entity.sprite.setTextureColorMode(255, 0, 0)
-			entities[textureName] = entity
+			entities[i] = append(entities[i], entity)
 			// if i == 0 || j == 0 || i == 13 || j == 13 {
 			// 	entities[textureName].physics = 1
 			// }

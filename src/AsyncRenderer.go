@@ -27,6 +27,13 @@ func (aRenderer *AsyncRenderer) handleRendering(entities map[string]*Entity) {
 	renderEntities(entities, aRenderer.renderer, aRenderer.cam)
 }
 
+func (aRenderer *AsyncRenderer) handleTileRendering(entities [][]*Entity) {
+	if !aRenderer.shouldRender {
+		return
+	}
+	renderEntityMatrix(entities, aRenderer.renderer, aRenderer.cam)
+}
+
 func (aRenderer *AsyncRenderer) present() {
 	if !aRenderer.shouldRender {
 		return

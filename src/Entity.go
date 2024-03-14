@@ -105,3 +105,12 @@ func renderEntities(entitiesMap map[string]*Entity, renderer *sdl.Renderer, cam 
 		entity.render(renderer, cam, nil)
 	}
 }
+
+func renderEntityMatrix(entities [][]*Entity, renderer *sdl.Renderer, cam *utils.Camera) {
+	for i := 0; i < len(entities); i++ {
+		for j := 0; j < len(entities[i]); j++ {
+			entity := entities[i][j]
+			entity.render(renderer, cam, nil)
+		}
+	}
+}
