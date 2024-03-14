@@ -7,6 +7,7 @@ import (
 	"math"
 
 	"github.com/veandco/go-sdl2/sdl"
+	"golang.org/x/exp/maps"
 )
 
 type FogOfWar struct {
@@ -32,20 +33,20 @@ func (fow *FogOfWar) CalculateDistance(pos1 *utils.Vec2, pos2 *utils.Vec2) int {
 	return deltaX + deltaY
 }
 
-func (fow *FogOfWar) GetColor(pos *utils.Vec2, entities map[string]*Entity) *sdl.Color {
-	alpha := uint8(125)
+func (fow *FogOfWar) GetColor(pos *utils.Vec2, entity *Entity) *sdl.Color {
+	distance := fow.CalculateDistance(pos, entity.gObject.Position)
+	if entity.gObject.Physics == nil {
+		return nil
+	}
+	lightCastDistanceUnits := entity.gObject.Physics.LightCastDistance
+	distanceUnits := distance / fow.size
+	if distance < lightCastDistanceUnits*fow.size {
 
-	for _, entity := range entities {
-		distance := fow.CalculateDistance(pos, entity.gObject.Position)
-		if entity.gObject.Physics == nil {
-			continue
-		}
-		if distance < entity.gObject.Physics.LightCastDistance*fow.size {
-			alpha = 0
-		}
+		alpha := uint8((distanceUnits * 25) % 125)
+		return &sdl.Color{R: 0, G: 0, B: 0, A: alpha}
 	}
 
-	return &sdl.Color{R: 0, G: 0, B: 0, A: alpha}
+	return nil
 }
 
 func (fow *FogOfWar) GenerateFowFromTiles(i int32, j int32) *Entity {
@@ -76,7 +77,21 @@ func (fow *FogOfWar) GenerateFowFromTiles(i int32, j int32) *Entity {
 	return entity
 }
 
-func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
+func getBrightestColor(colorA *sdl.Color, colorB *sdl.Color) *sdl.Color {
+	if colorA.A < colorB.A {
+		return colorA
+	}
+	return colorB
+}
+
+func (fow *FogOfWar) getTileEntity(pos *utils.Vec2) *Entity {
+	i := pos.X / int32(fow.size)
+	j := pos.Y / int32(fow.size)
+
+	return fow.fog[i][j]
+}
+
+func (fow *FogOfWar) UpdateFogOfWar(entitiesMap map[string]*Entity) {
 	if !fow.timeControl.ShouldExecute() {
 		return
 	}
@@ -84,7 +99,16 @@ func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
 	for i := 0; i < len(fow.fog); i++ {
 		for j := 0; j < len(fow.fog[i]); j++ {
 			entity := fow.fog[i][j]
-			entity.sprite.Color = fow.GetColor(entity.gObject.Position, entities)
+			entity.sprite.Color = &sdl.Color{R: 0, G: 0, B: 0, A: 125}
+		}
+	}
+
+	entities := maps.Values(entitiesMap)
+	for _, entity := range entities {
+		tileEntity := fow.getTileEntity(entity.gObject.Position)
+		newColor := fow.GetColor(tileEntity.gObject.Position, entity)
+		if newColor != nil {
+			tileEntity.sprite.Color = newColor
 		}
 	}
 }
