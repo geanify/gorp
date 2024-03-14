@@ -12,14 +12,13 @@ import (
 type FogOfWar struct {
 	timeControl *utils.TimeControl
 	size        int
-	tiles       map[string]*Entity
 	fog         [][]*Entity
 }
 
-func CreateFogOfWar(size int, tileMap map[string]*Entity) *FogOfWar {
+func CreateFogOfWar(size int) *FogOfWar {
 	fog := make([][]*Entity, 0)
 	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl(), fog: fog}
-	fow.GenerateFogOfWar(tileMap)
+	fow.GenerateFogOfWar()
 	return fow
 }
 
@@ -90,8 +89,7 @@ func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
 	}
 }
 
-func (fow *FogOfWar) GenerateFogOfWar(tiles map[string]*Entity) {
-	fow.tiles = tiles
+func (fow *FogOfWar) GenerateFogOfWar() {
 	for i := int32(0); i < 50*(64/int32(fow.size)); i++ {
 		fow.fog = append(fow.fog, make([]*Entity, 0))
 		for j := int32(0); j < 50*(64/int32(fow.size)); j++ {
