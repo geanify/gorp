@@ -49,7 +49,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 
 	tileMap := generateTileMap(tManager)
 	entities := loadEntities(tManager, gObjManager)
-	fow := CreateFogOfWar(64)
+	fow := CreateFogOfWar(32, sdl.Color{0, 0, 0, 0})
 	fpsCounter := createFPSCounter()
 	entities["fpsCounter"] = fpsCounter
 	iHandlerAnimation := createInputHandler()

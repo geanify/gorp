@@ -14,11 +14,17 @@ type FogOfWar struct {
 	timeControl *utils.TimeControl
 	size        int32
 	fog         [][]*Entity
+	baseColor   sdl.Color
 }
 
-func CreateFogOfWar(size int32) *FogOfWar {
+func CreateFogOfWar(size int32, baseColor sdl.Color) *FogOfWar {
 	fog := make([][]*Entity, 0)
-	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl(), fog: fog}
+	fow := &FogOfWar{
+		size:        size,
+		baseColor:   baseColor,
+		timeControl: utils.CreateTimeControl(),
+		fog:         fog,
+	}
 	fow.GenerateFogOfWar()
 	return fow
 }
@@ -42,8 +48,8 @@ func (fow *FogOfWar) GetColor(pos *utils.Vec2, entity *Entity) *sdl.Color {
 	distanceUnits := int32(distance) / fow.size
 	if int32(distance) < lightCastDistanceUnits*fow.size {
 
-		alpha := uint8(distanceUnits * (125) / lightCastDistanceUnits)
-		return &sdl.Color{R: 0, G: 0, B: 0, A: alpha}
+		alpha := uint8(distanceUnits*(distanceUnits+lightCastDistanceUnits)) % 255
+		return &sdl.Color{R: fow.baseColor.R, G: fow.baseColor.G, B: fow.baseColor.B, A: alpha}
 	}
 
 	return nil
@@ -126,7 +132,12 @@ func (fow *FogOfWar) UpdateFogOfWar(entitiesMap map[string]*Entity) {
 	for i := 0; i < len(fow.fog); i++ {
 		for j := 0; j < len(fow.fog[i]); j++ {
 			entity := fow.fog[i][j]
-			entity.sprite.Color = &sdl.Color{R: 0, G: 0, B: 0, A: 125}
+			entity.sprite.Color = &sdl.Color{
+				R: fow.baseColor.R,
+				G: fow.baseColor.G,
+				B: fow.baseColor.B,
+				A: 125,
+			}
 		}
 	}
 
