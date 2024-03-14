@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gorp/gfx"
 	"gorp/gobj"
 	"gorp/utils"
@@ -14,11 +13,12 @@ type FogOfWar struct {
 	timeControl *utils.TimeControl
 	size        int
 	tiles       map[string]*Entity
-	fog         map[string]*Entity
+	fog         [][]*Entity
 }
 
 func CreateFogOfWar(size int, tileMap map[string]*Entity) *FogOfWar {
-	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl()}
+	fog := make([][]*Entity, 0)
+	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl(), fog: fog}
 	fow.GenerateFogOfWar(tileMap)
 	return fow
 }
@@ -81,21 +81,22 @@ func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
 	if !fow.timeControl.ShouldExecute() {
 		return
 	}
-	for _, entity := range fow.fog {
-		entity.sprite.Color = fow.GetColor(entity.gObject.Position, entities)
+
+	for i := 0; i < len(fow.fog); i++ {
+		for j := 0; j < len(fow.fog[i]); j++ {
+			entity := fow.fog[i][j]
+			entity.sprite.Color = fow.GetColor(entity.gObject.Position, entities)
+		}
 	}
 }
 
 func (fow *FogOfWar) GenerateFogOfWar(tiles map[string]*Entity) {
 	fow.tiles = tiles
-	fowEntities := make(map[string]*Entity)
 	for i := int32(0); i < 50*(64/int32(fow.size)); i++ {
+		fow.fog = append(fow.fog, make([]*Entity, 0))
 		for j := int32(0); j < 50*(64/int32(fow.size)); j++ {
-			textureName := fmt.Sprintf("z-fow-%d-%d", i, j)
 			entity := fow.GenerateFowFromTiles(i, j)
-			fowEntities[textureName] = entity
-
+			fow.fog[i] = append(fow.fog[i], entity)
 		}
 	}
-	fow.fog = fowEntities
 }
