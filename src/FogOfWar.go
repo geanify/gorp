@@ -91,7 +91,8 @@ func (fow *FogOfWar) UpdateFogOfWar(entities map[string]*Entity) {
 
 func (fow *FogOfWar) GenerateFogOfWar() {
 	for i := int32(0); i < 50*(64/int32(fow.size)); i++ {
-		fow.fog = append(fow.fog, make([]*Entity, 0))
+		entityRow := make([]*Entity, 0)
+		fow.fog = append(fow.fog, entityRow)
 		for j := int32(0); j < 50*(64/int32(fow.size)); j++ {
 			entity := fow.GenerateFowFromTiles(i, j)
 			fow.fog[i] = append(fow.fog[i], entity)
