@@ -12,11 +12,11 @@ import (
 
 type FogOfWar struct {
 	timeControl *utils.TimeControl
-	size        int
+	size        int32
 	fog         [][]*Entity
 }
 
-func CreateFogOfWar(size int) *FogOfWar {
+func CreateFogOfWar(size int32) *FogOfWar {
 	fog := make([][]*Entity, 0)
 	fow := &FogOfWar{size: size, timeControl: utils.CreateTimeControl(), fog: fog}
 	fow.GenerateFogOfWar()
@@ -39,10 +39,10 @@ func (fow *FogOfWar) GetColor(pos *utils.Vec2, entity *Entity) *sdl.Color {
 		return nil
 	}
 	lightCastDistanceUnits := entity.gObject.Physics.LightCastDistance
-	distanceUnits := distance / fow.size
-	if distance < lightCastDistanceUnits*fow.size {
+	distanceUnits := int32(distance) / fow.size
+	if int32(distance) < lightCastDistanceUnits*fow.size {
 
-		alpha := uint8((distanceUnits * 25) % 125)
+		alpha := uint8(distanceUnits * (125) / lightCastDistanceUnits)
 		return &sdl.Color{R: 0, G: 0, B: 0, A: alpha}
 	}
 
@@ -91,6 +91,33 @@ func (fow *FogOfWar) getTileEntity(pos *utils.Vec2) *Entity {
 	return fow.fog[i][j]
 }
 
+func (fow *FogOfWar) GenerateLightAroundPosition(entity *Entity) {
+
+	if entity.gObject.Physics == nil {
+		return
+	}
+	lightCastDistance := entity.gObject.Physics.LightCastDistance
+	for i := -lightCastDistance; i < lightCastDistance; i++ {
+		for j := -lightCastDistance; j < lightCastDistance; j++ {
+
+			posX := entity.gObject.Position.X + i*fow.size
+			posY := entity.gObject.Position.Y + j*fow.size
+			pos := &utils.Vec2{X: posX, Y: posY}
+
+			if !pos.IsPositiveOrZero() {
+				continue
+			}
+
+			tileEntity := fow.getTileEntity(pos)
+
+			newColor := fow.GetColor(tileEntity.gObject.Position, entity)
+			if newColor != nil {
+				tileEntity.sprite.Color = getBrightestColor(tileEntity.sprite.Color, newColor)
+			}
+		}
+	}
+}
+
 func (fow *FogOfWar) UpdateFogOfWar(entitiesMap map[string]*Entity) {
 	if !fow.timeControl.ShouldExecute() {
 		return
@@ -105,11 +132,7 @@ func (fow *FogOfWar) UpdateFogOfWar(entitiesMap map[string]*Entity) {
 
 	entities := maps.Values(entitiesMap)
 	for _, entity := range entities {
-		tileEntity := fow.getTileEntity(entity.gObject.Position)
-		newColor := fow.GetColor(tileEntity.gObject.Position, entity)
-		if newColor != nil {
-			tileEntity.sprite.Color = newColor
-		}
+		fow.GenerateLightAroundPosition(entity)
 	}
 }
 

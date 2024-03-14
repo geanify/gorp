@@ -44,7 +44,7 @@
             "CurrentAcceleration": {"X": 0, "Y": 0},
             "Solid" : true,
             "DistanceFromCam": 1,
-            "LightCastDistance": 3
+            "LightCastDistance": 5
         }
     }
 } 

@@ -9,6 +9,10 @@ func (vec *Vec2) Empty() bool {
 	return vec == nil
 }
 
+func (vec *Vec2) IsPositiveOrZero() bool {
+	return vec.X >= 0 && vec.Y >= 0
+}
+
 func HasIntersection(a *Vec2, sizeA *Vec2, b *Vec2, sizeB *Vec2) bool {
 
 	if a.Empty() || sizeA.Empty() || b.Empty() || sizeB.Empty() {
