@@ -1,6 +1,6 @@
 {
-    "player" : "../assets/textures/pokemon.png",
-    "run" : "../assets/textures/run.png",
-    "grass" : "../assets/textures/tileset-grass.png"
+    "player" : "assets/textures/pokemon.png",
+    "run" : "assets/textures/run.png",
+    "grass" : "assets/textures/tileset-grass.png"
 
 }

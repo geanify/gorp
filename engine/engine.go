@@ -1,8 +1,8 @@
-package main
+package engine
 
 import "github.com/veandco/go-sdl2/sdl"
 
-func main() {
+func RunEngine() {
 	initSDL()
 	window := initWindow()
 	defer window.Destroy()

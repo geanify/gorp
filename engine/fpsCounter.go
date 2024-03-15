@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"gorp/gfx"
@@ -9,7 +9,7 @@ import (
 func createFPSCounter() *Entity {
 	text := &gfx.Text{}
 
-	text.SetFont("../assets/font/FreeSans.ttf", 24)
+	text.SetFont("assets/font/FreeSans.ttf", 24)
 	text.SetColorRGB(255, 255, 255)
 	text.SetBackgroundColorRGBA(0, 0, 0, 150)
 	text.SetText("")
