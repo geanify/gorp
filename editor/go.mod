@@ -1,4 +1,4 @@
-module editor
+module github.com/geanify/gorp/tree/main/editor
 
 go 1.21
 
