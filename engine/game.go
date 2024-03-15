@@ -42,10 +42,10 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	cycles := 0
 
 	gObjManager := gobj.CreateGameObjectManager()
-	gObjManager.FromJSON("./../assets/gobj.json")
+	gObjManager.FromJSON("assets/gobj.json")
 
 	tManager := gfx.CreateTextureManager(gameRenderer)
-	tManager.FromJSON("./../assets/textures.json")
+	tManager.FromJSON("assets/textures.json")
 
 	tileMap := generateTileMap(tManager)
 	entities := loadEntities(tManager, gObjManager)

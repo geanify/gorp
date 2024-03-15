@@ -19,10 +19,10 @@ func CreateAudio() *Audio {
 	}
 	return &Audio{
 		Tracklist: map[string]string{
-			"test1": "/home/geani/dev/gorpg-engine/assets/sfx/test1.mp3",
+			"test1": "assets/sfx/test1.mp3",
 		},
 		SfxList: map[string]string{
-			"testsfx1": "./../../assets/sfx/test1.mp3",
+			"testsfx1": "assets/sfx/test1.mp3",
 		},
 	}
 }
