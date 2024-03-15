@@ -1,6 +1,8 @@
 package main
 
-import "gorp/engine"
+import (
+	"gorp/engine"
+)
 
 func main() {
 	engine.RunEngine()

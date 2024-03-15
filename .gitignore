@@ -26,3 +26,8 @@ assets/textures
 
 node_modules
 package-lock.json
+
+
+build/bin
+node_modules
+frontend/dist
