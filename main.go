@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gorp/engine"
+	"github.com/geanify/gorp/engine"
 )
 
 func main() {

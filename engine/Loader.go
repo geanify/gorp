@@ -1,11 +1,11 @@
 package engine
 
 import (
-	"gorp/gfx"
-	"gorp/gobj"
-	"gorp/phy"
-	"gorp/rpg"
-	"gorp/utils"
+	"github.com/geanify/gorp/gfx"
+	"github.com/geanify/gorp/gobj"
+	"github.com/geanify/gorp/phy"
+	"github.com/geanify/gorp/rpg"
+	"github.com/geanify/gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 )

@@ -1,8 +1,8 @@
 package gobj
 
 import (
-	"gorp/phy"
-	"gorp/utils"
+	"github.com/geanify/gorp/phy"
+	"github.com/geanify/gorp/utils"
 )
 
 type GameObject struct {

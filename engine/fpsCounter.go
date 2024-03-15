@@ -1,9 +1,9 @@
 package engine
 
 import (
-	"gorp/gfx"
-	"gorp/gobj"
-	"gorp/utils"
+	"github.com/geanify/gorp/gfx"
+	"github.com/geanify/gorp/gobj"
+	"github.com/geanify/gorp/utils"
 )
 
 func createFPSCounter() *Entity {

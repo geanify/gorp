@@ -1,6 +1,6 @@
 package phy
 
-import "gorp/utils"
+import "github.com/geanify/gorp/utils"
 
 type PhyObject struct {
 	Mass                int

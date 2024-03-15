@@ -1,10 +1,11 @@
 package engine
 
 import (
-	"gorp/gobj"
-	"gorp/sfx"
-	"gorp/utils"
 	"time"
+
+	"github.com/geanify/gorp/gobj"
+	"github.com/geanify/gorp/sfx"
+	"github.com/geanify/gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 )

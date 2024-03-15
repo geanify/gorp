@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"gorp/utils"
+	"github.com/geanify/gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 )

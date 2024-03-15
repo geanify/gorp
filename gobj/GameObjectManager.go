@@ -3,9 +3,10 @@ package gobj
 import (
 	"encoding/json"
 	"fmt"
-	"gorp/utils"
 	"log"
 	"os"
+
+	"github.com/geanify/gorp/utils"
 )
 
 type GameObjectManager struct {

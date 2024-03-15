@@ -1,8 +1,9 @@
 package gfx
 
 import (
-	"gorp/utils"
 	"math/rand"
+
+	"github.com/geanify/gorp/utils"
 
 	"github.com/veandco/go-sdl2/sdl"
 )

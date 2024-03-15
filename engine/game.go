@@ -2,12 +2,14 @@ package engine
 
 import (
 	"fmt"
-	"gorp/gfx"
-	"gorp/gobj"
-	"gorp/sfx"
-	"gorp/utils"
 	"os"
 	"time"
+
+	"github.com/geanify/gorp/utils"
+
+	"github.com/geanify/gorp/gfx"
+	"github.com/geanify/gorp/gobj"
+	"github.com/geanify/gorp/sfx"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
