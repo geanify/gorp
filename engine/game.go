@@ -5,10 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/geanify/gorp/utils"
-
-	"github.com/geanify/gorp/gfx"
-	"github.com/geanify/gorp/gobj"
 	"github.com/geanify/gorp/sfx"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -43,17 +39,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	start := time.Now()
 	cycles := 0
 
-	gObjManager := gobj.CreateGameObjectManager()
-	gObjManager.FromJSON("assets/gobj.json")
-
-	tManager := gfx.CreateTextureManager(gameRenderer)
-	tManager.FromJSON("assets/textures.json")
-
-	tileMap := generateTileMap(tManager)
-	entities := loadEntities(tManager, gObjManager)
-	fow := CreateFogOfWar(32, sdl.Color{R: 0, G: 0, B: 0, A: 0})
-	fpsCounter := createFPSCounter()
-	entities["fpsCounter"] = fpsCounter
+	_map := GenerateTestMap(gameRenderer)
 	iHandlerAnimation := createInputHandler()
 	iHandlerMovement := createInputHandler()
 	mHandler := createMouseHandler()
@@ -61,25 +47,15 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	audio := sfx.CreateAudio()
 	audio.GenerateChunks()
 
-	loadParticle(entities, gObjManager, tManager)
-
-	camera := utils.CreateCamera()
-	aRenderer := createARenderer(gameRenderer, camera)
+	loadParticle(_map.Units, _map.GameObjManager, _map.TextureManager)
 
 	for {
-		aRenderer.clearRenderer()
-		aRenderer.handleTileRendering(tileMap)
+		_map.RenderMap()
+		iHandlerAnimation.animationHandler(_map.Units, audio)
+		iHandlerMovement.handleMovement(_map.GameObjManager)
+		mHandler.handleCameraMove(_map.Camera)
 
-		aRenderer.handleRendering(entities)
-		fow.UpdateFogOfWar(entities)
-		aRenderer.handleTileRendering(fow.fog)
-
-		aRenderer.present()
-		iHandlerAnimation.animationHandler(entities, audio)
-		iHandlerMovement.handleMovement(gObjManager)
-		mHandler.handleCameraMove(camera)
-
-		handleFpsCounter(fpsCounter, &start, &cycles)
+		handleFpsCounter(_map.Units["fpsCounter"], &start, &cycles)
 
 		handleQuit()
 	}
