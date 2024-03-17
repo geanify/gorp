@@ -5,8 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/geanify/gorp/sfx"
-
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -40,20 +38,13 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	cycles := 0
 
 	_map := GenerateTestMap(gameRenderer)
-	iHandlerAnimation := createInputHandler()
-	iHandlerMovement := createInputHandler()
-	mHandler := createMouseHandler()
-
-	audio := sfx.CreateAudio()
-	audio.GenerateChunks()
+	iHandler := CreateInputHandler(_map)
 
 	loadParticle(_map.Units, _map.GameObjManager, _map.TextureManager)
 
 	for {
 		_map.RenderMap()
-		iHandlerAnimation.animationHandler(_map.Units, audio)
-		iHandlerMovement.handleMovement(_map.GameObjManager)
-		mHandler.handleCameraMove(_map.Camera)
+		iHandler.HandleInput()
 
 		handleFpsCounter(_map.Units["fpsCounter"], &start, &cycles)
 
