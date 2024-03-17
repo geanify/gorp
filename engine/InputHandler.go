@@ -14,7 +14,7 @@ func CreateInputHandler(_map *Map) *InputHandler {
 	kHandlerAnimation := createKeyHandler()
 	kHandlerMovement := createKeyHandler()
 	mHandler := createMouseHandler()
-	audio := sfx.CreateAudio()
+	audio := sfx.CreateAudio("assets/sfx/")
 	audio.GenerateChunks()
 
 	return &InputHandler{

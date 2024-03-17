@@ -55,15 +55,13 @@ func (mBuilder *MapBuilder) WithFogOfWar() *MapBuilder {
 	return mBuilder
 }
 
-func (mBuilder *MapBuilder) WithFpsCounter() *MapBuilder {
-	fpsCounter := createFPSCounter()
+func (mBuilder *MapBuilder) WithFpsCounter(fontPath string) *MapBuilder {
+	fpsCounter := createFPSCounter(fontPath)
 	mBuilder.GameMap.Units["fpsCounter"] = fpsCounter
 	return mBuilder
 }
 
 func (mBuilder *MapBuilder) Build() *Map {
-	fpsCounter := createFPSCounter()
-	mBuilder.GameMap.Units["fpsCounter"] = fpsCounter
 	return mBuilder.GameMap
 }
 
@@ -76,5 +74,5 @@ func GenerateTestMap(gameRenderer *sdl.Renderer) *Map {
 		"assets/gobj.json",
 	).WithTextureManager(
 		"assets/textures.json",
-	).WithTiles().WithUnits().WithFogOfWar().WithFpsCounter().Build()
+	).WithTiles().WithUnits().WithFogOfWar().WithFpsCounter("assets/font/FreeSans.ttf").Build()
 }

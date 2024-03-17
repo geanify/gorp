@@ -13,16 +13,16 @@ type Audio struct {
 	TrackChunks map[string]*mix.Chunk
 }
 
-func CreateAudio() *Audio {
+func CreateAudio(basePath string) *Audio {
 	if err := mix.OpenAudio(22050, mix.DEFAULT_FORMAT, 2, 4096); err != nil {
 		log.Println(err)
 	}
 	return &Audio{
 		Tracklist: map[string]string{
-			"test1": "assets/sfx/test1.mp3",
+			"test1": basePath + "test1.mp3",
 		},
 		SfxList: map[string]string{
-			"testsfx1": "assets/sfx/test1.mp3",
+			"testsfx1": basePath + "test1.mp3",
 		},
 	}
 }

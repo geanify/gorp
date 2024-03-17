@@ -6,10 +6,10 @@ import (
 	"github.com/geanify/gorp/utils"
 )
 
-func createFPSCounter() *Entity {
+func createFPSCounter(fontPath string) *Entity {
 	text := &gfx.Text{}
 
-	text.SetFont("assets/font/FreeSans.ttf", 24)
+	text.SetFont(fontPath, 24)
 	text.SetColorRGB(255, 255, 255)
 	text.SetBackgroundColorRGBA(0, 0, 0, 150)
 	text.SetText("")
