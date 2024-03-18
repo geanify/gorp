@@ -31,21 +31,22 @@ func (iHandler *KeyHandler) handleMovement(gameObjects *gobj.GameObjectManager) 
 	gameObjects.GenerateCollisionMatrix()
 
 	player.SlowDown()
+
+	if gameObjects.HasCollision("player") {
+		player.InvertMovement()
+	} else if iHandler.isKeyPressed(sdl.SCANCODE_W) {
+		player.MoveUp()
+	} else if iHandler.isKeyPressed(sdl.SCANCODE_S) {
+		player.MoveDown()
+	} else {
+		player.Physics.FreeFall()
+	}
+
 	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
 		player.MoveLeft()
 	}
 	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
 		player.MoveRight()
-	}
-	if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		player.MoveUp()
-	}
-	if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		player.MoveDown()
-	}
-
-	if gameObjects.HasCollision("player") {
-		player.InvertMovement()
 	}
 
 	player.Move()

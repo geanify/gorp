@@ -4,7 +4,7 @@ import "github.com/geanify/gorp/utils"
 
 type PhyObject struct {
 	Mass                int
-	TerminalVelocity    int
+	TerminalVelocity    int32
 	CurrentVelocity     *utils.Vec2
 	CurrentAcceleration *utils.Vec2
 	Solid               bool
@@ -15,7 +15,7 @@ type PhyObject struct {
 func CreatePhyObject() *PhyObject {
 	return &PhyObject{
 		Mass:                100,
-		TerminalVelocity:    100,
+		TerminalVelocity:    10,
 		CurrentVelocity:     &utils.Vec2{X: 0, Y: 0},
 		CurrentAcceleration: &utils.Vec2{X: 0, Y: 0},
 		Solid:               false,
@@ -27,6 +27,22 @@ func CreatePhyObject() *PhyObject {
 func (pObj *PhyObject) UpdateVelocity() {
 	pObj.CurrentVelocity.X += pObj.CurrentAcceleration.X
 	pObj.CurrentVelocity.Y += pObj.CurrentAcceleration.Y
+
+	if pObj.CurrentVelocity.Y > pObj.TerminalVelocity {
+		pObj.CurrentVelocity.Y = pObj.TerminalVelocity
+	}
+
+	if pObj.CurrentVelocity.Y < -pObj.TerminalVelocity {
+		pObj.CurrentVelocity.Y = -pObj.TerminalVelocity
+	}
+
+	if pObj.CurrentVelocity.X > pObj.TerminalVelocity {
+		pObj.CurrentVelocity.X = pObj.TerminalVelocity
+	}
+
+	if pObj.CurrentVelocity.X < -pObj.TerminalVelocity {
+		pObj.CurrentVelocity.X = -pObj.TerminalVelocity
+	}
 }
 
 func (pObj *PhyObject) SetAcceleration(X int32, Y int32) {
@@ -60,6 +76,6 @@ func (pObj *PhyObject) SlowDown() {
 }
 
 func (pObj *PhyObject) FreeFall() {
-	pObj.CurrentAcceleration.Y = 1
+	pObj.CurrentAcceleration.Y = 10
 	pObj.UpdateVelocity()
 }
