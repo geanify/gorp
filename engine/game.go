@@ -38,7 +38,7 @@ func gameLoop(gameRenderer *sdl.Renderer) {
 	cycles := 0
 
 	_map := LoadMap(gameRenderer, "assets/map1/")
-	iHandler := CreateInputHandler(_map, "assets/map1/")
+	iHandler := CreateInputHandler(_map, "assets/")
 
 	loadParticle(_map.Units, _map.GameObjManager, _map.TextureManager)
 
