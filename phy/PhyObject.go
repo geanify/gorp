@@ -10,6 +10,7 @@ type PhyObject struct {
 	Solid               bool
 	DistanceFromCam     int
 	LightCastDistance   int32
+	AirResistence       int32
 }
 
 func CreatePhyObject() *PhyObject {
@@ -21,6 +22,7 @@ func CreatePhyObject() *PhyObject {
 		Solid:               false,
 		DistanceFromCam:     0,
 		LightCastDistance:   0,
+		AirResistence:       0,
 	}
 }
 
@@ -99,8 +101,18 @@ func (pObj *PhyObject) StopX() {
 
 func (pObj *PhyObject) SlowDown() {
 	// pObj.SetAcceleration(0, 0)
-	pObj.CurrentVelocity.X /= 2
-	pObj.CurrentVelocity.Y /= 2
+	deltaX := pObj.CurrentVelocity.X / pObj.AirResistence
+	if deltaX == 0 {
+		pObj.CurrentVelocity.X = 0
+	} else {
+		pObj.CurrentVelocity.X -= deltaX
+	}
+	deltaY := pObj.CurrentVelocity.Y / pObj.AirResistence
+	if deltaY == 0 {
+		pObj.CurrentVelocity.Y = 0
+	} else {
+		pObj.CurrentVelocity.Y -= deltaY
+	}
 }
 
 func (pObj *PhyObject) FreeFall() {

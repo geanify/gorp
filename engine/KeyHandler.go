@@ -30,8 +30,6 @@ func (iHandler *KeyHandler) handleMovement(gameObjects *gobj.GameObjectManager) 
 
 	gameObjects.GenerateCollisionMatrix()
 
-	player.SlowDown()
-
 	if gameObjects.HasCollision("player") {
 		shouldStop := true
 		if iHandler.isKeyPressed(sdl.SCANCODE_W) {
@@ -54,6 +52,7 @@ func (iHandler *KeyHandler) handleMovement(gameObjects *gobj.GameObjectManager) 
 	} else {
 		player.Physics.FreeFall()
 	}
+	player.SlowDown()
 
 	player.Move()
 }

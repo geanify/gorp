@@ -9,6 +9,7 @@ type GameObject struct {
 	Position *utils.Vec2
 	Size     *utils.Vec2
 	Physics  *phy.PhyObject
+	Speed    int32
 }
 
 func (gObject *GameObject) GetDistanceAdjustedPosition() *utils.Vec2 {
@@ -45,23 +46,23 @@ func (gObject *GameObject) GetDistanceAdjustedSize() *utils.Vec2 {
 }
 
 func (gObject *GameObject) MoveLeft() {
-	gObject.Physics.MoveX(-10)
+	gObject.Physics.MoveX(-gObject.Speed)
 }
 
 func (gObject *GameObject) MoveRight() {
-	gObject.Physics.MoveX(10)
+	gObject.Physics.MoveX(gObject.Speed)
 }
 
 func (gObject *GameObject) MoveUp() {
-	gObject.Physics.MoveY(-10)
+	gObject.Physics.MoveY(-gObject.Speed)
 }
 
 func (gObject *GameObject) Jump() {
-	gObject.Physics.MoveY(-40)
+	gObject.Physics.MoveY(-gObject.Speed * 5)
 }
 
 func (gObject *GameObject) MoveDown() {
-	gObject.Physics.MoveY(10)
+	gObject.Physics.MoveY(gObject.Speed)
 }
 
 func (gObject *GameObject) InvertMovement() {
@@ -87,6 +88,7 @@ type GameObjectJSON struct {
 	W int32         //size.X
 	H int32         //size.Y
 	P phy.PhyObject //physics
+	S int32         //speed
 }
 
 func (gObjJSON *GameObjectJSON) ToGameObject() *GameObject {
@@ -94,5 +96,6 @@ func (gObjJSON *GameObjectJSON) ToGameObject() *GameObject {
 		Position: &utils.Vec2{X: gObjJSON.X, Y: gObjJSON.Y},
 		Size:     &utils.Vec2{X: gObjJSON.W, Y: gObjJSON.H},
 		Physics:  &gObjJSON.P,
+		Speed:    gObjJSON.S,
 	}
 }
