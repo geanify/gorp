@@ -37,7 +37,7 @@ func (tManager *TextureManager) LoadImageAsTexture(fileLocation string) (texture
 }
 
 func (tManager *TextureManager) FromJSON(path string) {
-	content, err := os.ReadFile(path)
+	content, err := os.ReadFile(path + "textures.json")
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
 	}
@@ -48,7 +48,7 @@ func (tManager *TextureManager) FromJSON(path string) {
 	}
 
 	for key, val := range payload {
-		tManager.Textures[key] = tManager.LoadImageAsTexture(val)
+		tManager.Textures[key] = tManager.LoadImageAsTexture(path + val)
 	}
 
 }

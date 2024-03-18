@@ -10,11 +10,11 @@ type InputHandler struct {
 	audio             *sfx.Audio
 }
 
-func CreateInputHandler(_map *Map) *InputHandler {
+func CreateInputHandler(_map *Map, path string) *InputHandler {
 	kHandlerAnimation := createKeyHandler()
 	kHandlerMovement := createKeyHandler()
 	mHandler := createMouseHandler()
-	audio := sfx.CreateAudio("assets/sfx/")
+	audio := sfx.CreateAudio(path + "sfx/")
 	audio.GenerateChunks()
 
 	return &InputHandler{

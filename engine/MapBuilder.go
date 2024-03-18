@@ -8,7 +8,8 @@ import (
 )
 
 type MapBuilder struct {
-	GameMap *Map
+	GameMap  *Map
+	basePath string
 }
 
 func (mBuilder *MapBuilder) Create(gameRenderer *sdl.Renderer) *MapBuilder {
@@ -20,18 +21,24 @@ func (mBuilder *MapBuilder) Create(gameRenderer *sdl.Renderer) *MapBuilder {
 	return mBuilder
 }
 
-func (mBuilder *MapBuilder) WithGameObjectManager(objPath string) *MapBuilder {
+func (mBuilder *MapBuilder) WithPath(basePath string) *MapBuilder {
+	mBuilder.basePath = basePath
+
+	return mBuilder
+}
+
+func (mBuilder *MapBuilder) WithGameObjectManager() *MapBuilder {
 	gObjManager := gobj.CreateGameObjectManager()
-	gObjManager.FromJSON(objPath)
+	gObjManager.FromJSON(mBuilder.basePath)
 
 	mBuilder.GameMap.GameObjManager = gObjManager
 
 	return mBuilder
 }
 
-func (mBuilder *MapBuilder) WithTextureManager(tManagerPath string) *MapBuilder {
+func (mBuilder *MapBuilder) WithTextureManager() *MapBuilder {
 	tManager := gfx.CreateTextureManager(mBuilder.GameMap.ARenderer.renderer)
-	tManager.FromJSON(tManagerPath)
+	tManager.FromJSON(mBuilder.basePath)
 	mBuilder.GameMap.TextureManager = tManager
 	return mBuilder
 }
@@ -65,14 +72,10 @@ func (mBuilder *MapBuilder) Build() *Map {
 	return mBuilder.GameMap
 }
 
-func GenerateTestMap(gameRenderer *sdl.Renderer) *Map {
+func LoadMap(gameRenderer *sdl.Renderer, path string) *Map {
 	mBuilder := &MapBuilder{}
 
 	return mBuilder.Create(
 		gameRenderer,
-	).WithGameObjectManager(
-		"assets/gobj.json",
-	).WithTextureManager(
-		"assets/textures.json",
-	).WithTiles().WithUnits().WithFogOfWar().WithFpsCounter("assets/font/FreeSans.ttf").Build()
+	).WithPath(path).WithGameObjectManager().WithTextureManager().WithTiles().WithUnits().WithFogOfWar().WithFpsCounter(path + "font/FreeSans.ttf").Build()
 }

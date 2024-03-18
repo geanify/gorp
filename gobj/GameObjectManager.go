@@ -30,7 +30,7 @@ func (gObjManager *GameObjectManager) Set(id string, gObj *GameObject) {
 }
 
 func (gObjManager *GameObjectManager) FromJSON(path string) {
-	content, err := os.ReadFile(path)
+	content, err := os.ReadFile(path + "gobj.json")
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
 	}
