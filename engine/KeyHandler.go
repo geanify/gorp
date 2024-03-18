@@ -33,20 +33,26 @@ func (iHandler *KeyHandler) handleMovement(gameObjects *gobj.GameObjectManager) 
 	player.SlowDown()
 
 	if gameObjects.HasCollision("player") {
-		player.InvertMovement()
-	} else if iHandler.isKeyPressed(sdl.SCANCODE_W) {
-		player.MoveUp()
-	} else if iHandler.isKeyPressed(sdl.SCANCODE_S) {
-		player.MoveDown()
+		shouldStop := true
+		if iHandler.isKeyPressed(sdl.SCANCODE_W) {
+			player.Jump()
+			shouldStop = false
+		}
+		if iHandler.isKeyPressed(sdl.SCANCODE_S) {
+			player.MoveDown()
+			shouldStop = false
+		}
+		if iHandler.isKeyPressed(sdl.SCANCODE_A) {
+			player.MoveLeft()
+		}
+		if iHandler.isKeyPressed(sdl.SCANCODE_D) {
+			player.MoveRight()
+		}
+		if shouldStop {
+			player.Physics.StopY()
+		}
 	} else {
 		player.Physics.FreeFall()
-	}
-
-	if iHandler.isKeyPressed(sdl.SCANCODE_A) {
-		player.MoveLeft()
-	}
-	if iHandler.isKeyPressed(sdl.SCANCODE_D) {
-		player.MoveRight()
 	}
 
 	player.Move()

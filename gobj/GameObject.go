@@ -45,19 +45,23 @@ func (gObject *GameObject) GetDistanceAdjustedSize() *utils.Vec2 {
 }
 
 func (gObject *GameObject) MoveLeft() {
-	gObject.Physics.Move(-10, 0)
+	gObject.Physics.MoveX(-10)
 }
 
 func (gObject *GameObject) MoveRight() {
-	gObject.Physics.Move(10, 0)
+	gObject.Physics.MoveX(10)
 }
 
 func (gObject *GameObject) MoveUp() {
-	gObject.Physics.Move(0, -10)
+	gObject.Physics.MoveY(-10)
+}
+
+func (gObject *GameObject) Jump() {
+	gObject.Physics.MoveY(-40)
 }
 
 func (gObject *GameObject) MoveDown() {
-	gObject.Physics.Move(0, 10)
+	gObject.Physics.MoveY(10)
 }
 
 func (gObject *GameObject) InvertMovement() {

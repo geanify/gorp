@@ -50,6 +50,11 @@ func (pObj *PhyObject) SetAcceleration(X int32, Y int32) {
 	pObj.CurrentAcceleration.X = X
 }
 
+func (pObj *PhyObject) SetVelocity(X int32, Y int32) {
+	pObj.CurrentVelocity.Y = Y
+	pObj.CurrentVelocity.X = X
+}
+
 func (pObj *PhyObject) InvertMovement() {
 	pObj.CurrentAcceleration.Y = (-1) * pObj.CurrentAcceleration.Y
 	pObj.CurrentAcceleration.X = (-1) * pObj.CurrentAcceleration.X
@@ -64,18 +69,41 @@ func (pObj *PhyObject) InvertAcceleration() {
 	pObj.CurrentVelocity.X = 0
 }
 
+func (pObj *PhyObject) MoveY(Y int32) {
+	pObj.CurrentAcceleration.Y = Y
+	pObj.UpdateVelocity()
+}
+
+func (pObj *PhyObject) MoveX(X int32) {
+	pObj.CurrentAcceleration.X = X
+	pObj.UpdateVelocity()
+}
+
 func (pObj *PhyObject) Move(X int32, Y int32) {
 	pObj.SetAcceleration(X, Y)
 	pObj.UpdateVelocity()
 }
 
+func (pObj *PhyObject) Stop() {
+	pObj.CurrentVelocity.X = 0
+	pObj.CurrentVelocity.Y = 0
+}
+
+func (pObj *PhyObject) StopY() {
+	pObj.CurrentVelocity.Y = 0
+}
+
+func (pObj *PhyObject) StopX() {
+	pObj.CurrentVelocity.X = 0
+}
+
 func (pObj *PhyObject) SlowDown() {
-	pObj.SetAcceleration(0, 0)
+	// pObj.SetAcceleration(0, 0)
 	pObj.CurrentVelocity.X /= 2
 	pObj.CurrentVelocity.Y /= 2
 }
 
 func (pObj *PhyObject) FreeFall() {
-	pObj.CurrentAcceleration.Y = 10
+	pObj.CurrentAcceleration.Y += 10
 	pObj.UpdateVelocity()
 }
