@@ -58,7 +58,7 @@ func (gObject *GameObject) MoveUp() {
 }
 
 func (gObject *GameObject) Jump() {
-	gObject.Physics.MoveY(-gObject.Speed * 5)
+	gObject.Physics.MoveY(-gObject.Speed * 2)
 }
 
 func (gObject *GameObject) MoveDown() {
